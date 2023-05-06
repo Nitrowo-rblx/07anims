@@ -1,0 +1,728 @@
+ game.Players.LocalPlayer.Character:BreakJoints()
+   game.Players.LocalPlayer.Character=nil
+   Connection = game.Workspace.DescendantAdded:Connect(function(c)
+       if c.Name == "Animate" then
+           c.Disabled=true        
+       end
+   end)
+   function waitForChild(parent, childName)
+local child = parent:findFirstChild(childName)
+if child then return child end
+while true do
+ child = parent.ChildAdded:wait()
+ if child.Name==childName then return child end
+end
+end
+
+-- ANIMATION
+
+-- declarations
+-- Decompiled with the Synapse X Luau decompiler.
+
+
+ local plr =game.Players.LocalPlayer
+workspace:SetAttribute("RbxLegacyAnimationBlending", true)
+plr.CharacterAdded:Connect(function()
+wait(.5)
+
+local l__LocalPlayer__1 = game.Players.LocalPlayer;
+local v2 = l__LocalPlayer__1.Character or l__LocalPlayer__1.CharacterAdded:Wait();
+local hrp = v2.HumanoidRootPart
+Instance.new("Attachment",hrp).Name = "Att"
+Instance.new("AngularVelocity",hrp.Att)
+hrp.Att.AngularVelocity.Attachment0 = hrp.Att
+local l__Humanoid__3 = v2:WaitForChild("Humanoid");
+local l__Torso__4 = v2:WaitForChild("Torso");
+local l__Animate__5 = v2:WaitForChild("Animate", 1);
+local l__UserInputService__6 = game:GetService("UserInputService");
+local l__TweenService__7 = game:GetService("TweenService");
+local l__GuiService__8 = game:GetService("GuiService");
+local v9 = TweenInfo.new(0.587, Enum.EasingStyle.Quad, Enum.EasingDirection.Out);
+function Lerp(p1, p2, p3)
+	return p1 + (p2 - p1) * p3;
+end;
+function create(p4, p5, p6)
+	local v10, v11 = pcall(function()
+		return Instance.new(p4);
+	end);
+	if v10 == true then
+
+	else
+		warn(v11);
+		return nil;
+	end;
+	if typeof(p6) == "table" then
+		local v12, v13, v14 = pairs(p6);
+		while true do
+			local v15, v16 = v12(v13, v14);
+			if v15 then
+
+			else
+				break;
+			end;
+			v14 = v15;
+			pcall(function()
+				v11[v15] = v16;
+			end);		
+		end;
+	end;
+	if typeof(p5) == "Instance" then
+		v11.Parent = p5;
+	end;
+	return v11;
+end;
+local v17 = create("BodyGyro", nil, {
+	Name = "MovementGyro", 
+	MaxTorque = Vector3.new(0, 6000000, 0), 
+	Parent = l__Torso__4, 
+	D = 200
+});
+local l__HumanoidRootPart__1 = v2:WaitForChild("HumanoidRootPart");
+local l__CFrame_new__2 = CFrame.new;
+local l__Head__3 = v2:WaitForChild("Head"); 
+local l__Vector3_new__4 = Vector3.new;
+local l__task_wait__5 = task.wait;
+local u6 = "Running";
+function LandTilt()
+	local l__AngularVelocity__18 = l__HumanoidRootPart__1:FindFirstChild("Att"):FindFirstChild("AngularVelocity");
+	if l__AngularVelocity__18 then
+		local l__LookVector__19 = l__CFrame_new__2(l__Head__3.Position, l__Head__3.Position + l__Head__3.AssemblyLinearVelocity * l__Vector3_new__4(1, 0, 1)).LookVector;
+		local l__Unit__20 = l__Head__3.CFrame:vectorToObjectSpace(l__LookVector__19).Unit;
+		if 0 < l__LookVector__19.Magnitude then
+			local v21 = l__Vector3_new__4(l__Unit__20.X, 0, l__Unit__20.Z);
+		else
+			v21 = l__Vector3_new__4(0, 0, -0.41);
+		end;
+		l__AngularVelocity__18.MaxTorque = 6000000;
+		l__AngularVelocity__18.AngularVelocity = v21 * (l__Head__3.AssemblyLinearVelocity.Magnitude / 9);
+		l__task_wait__5(0.085);
+		while true do
+			l__task_wait__5(0.04);
+			l__AngularVelocity__18.MaxTorque = Lerp(l__AngularVelocity__18.MaxTorque, 0, 0.6);
+			l__AngularVelocity__18.AngularVelocity = l__AngularVelocity__18.AngularVelocity:Lerp(Vector3.zero, 0.6);
+			if not (l__AngularVelocity__18.MaxTorque <= 100) then
+
+			else
+				break;
+			end;
+			if u6 ~= "FallingDown" then
+
+			else
+				break;
+			end;		
+		end;
+		l__AngularVelocity__18.MaxTorque = 0;
+		l__AngularVelocity__18.AngularVelocity = Vector3.zero;
+	end;
+end;
+local u7 = 0;
+local l__tick__8 = tick;
+local l__math_abs__9 = math.abs;
+local u10 = 0;
+local u11 = l__TweenService__7:Create(l__Humanoid__3, v9, {
+	HipHeight = 0
+});
+function Bounce()
+	u7 = l__tick__8();
+	local l__Y__22 = l__Torso__4.AssemblyLinearVelocity.Y;
+	local v23 = l__Torso__4.AssemblyLinearVelocity * l__Vector3_new__4(1, 0, 1);
+	if l__Y__22 < 0 == false then
+		return;
+	end;
+	if 70 <= l__math_abs__9(l__Y__22) then
+		task.spawn(LandTilt);
+		l__task_wait__5(0.04);
+		l__Torso__4.AssemblyLinearVelocity = v23 + l__Vector3_new__4(0, l__math_abs__9(l__Y__22) / 1.25, 0);
+		return;
+	end;
+	if 44.38 <= l__math_abs__9(l__Y__22) then
+		if l__math_abs__9(l__Y__22) < 70 then
+			local v24 = 0;
+			if l__tick__8() - u10 <= 1.1 then
+				l__Humanoid__3.HipHeight = -1.3;
+				l__task_wait__5();
+				u11:Play();
+				v24 = -1;
+			else
+				task.spawn(LandTilt);
+			end;
+			l__task_wait__5(0.04);
+			l__Torso__4.AssemblyLinearVelocity = v23 + l__Vector3_new__4(0, l__math_abs__9(l__Y__22) / 1.25, 0);
+			u10 = l__tick__8() + v24;
+		end;
+	end;
+end;
+local l__workspace__12 = workspace;
+local u13 = { v2 };
+local l__table_insert__14 = table.insert;
+local u15 = RaycastParams.new();
+function Raycast(p7, p8, p9)
+	local v25 = l__workspace__12:Raycast(p7, p8, p9);
+	if v25 then
+
+	else
+		return nil;
+	end;
+	local l__Instance__26 = v25.Instance;
+	if l__Instance__26.CanCollide == false then
+
+	else
+		return l__Instance__26, v25.Position, v25.Normal;
+	end;
+	l__table_insert__14(u13, l__Instance__26);
+	u15.FilterDescendantsInstances = u13;
+	p7 = p7 + p8.Unit * 0.01;
+	return Raycast(p7, p8, p9);
+end;
+local u16 = create("BodyVelocity", nil, {
+	Name = "MovementLock", 
+	MaxForce = Vector3.new(40000, 0, 40000), 
+	Velocity = Vector3.zero
+});
+function SetJump(p10)
+	if p10 == true then
+
+	else
+		u16.Parent = nil;
+		return;
+	end;
+	u16.Parent = l__HumanoidRootPart__1;
+	u16.Velocity = l__Torso__4.AssemblyLinearVelocity;
+end;
+local u17 = l__TweenService__7:Create(l__Humanoid__3, v9, {
+	HipHeight = 0
+});
+local u18 = TweenInfo.new(0.27, Enum.EasingStyle.Quad, Enum.EasingDirection.Out);
+function legfloat()
+	local v27 = v2:FindFirstChild("Right Leg") or (v2:FindFirstChild("Left Leg") or nil);
+	if v27 ~= nil then
+		local v28 = 0;
+	else
+		v28 = 2;
+	end;
+	l__Humanoid__3.HipHeight = v28;
+	if v27 then
+		u11 = l__TweenService__7:Create(l__Humanoid__3, v9, {
+			HipHeight = 0
+		});
+		u17 = l__TweenService__7:Create(l__Humanoid__3, v9, {
+			HipHeight = 0
+		});
+		return;
+	end;
+	u11 = l__TweenService__7:Create(l__Humanoid__3, u18, {
+		HipHeight = 0
+	});
+	u17 = l__TweenService__7:Create(l__Humanoid__3, v9, {
+		HipHeight = 0
+	});
+end;
+local l__CFrame_Angles__19 = CFrame.Angles;
+local l__math_pi__20 = math.pi;
+function TiltAngle(p11)
+	return (l__Torso__4.CFrame * l__CFrame_Angles__19(l__math_pi__20 / 2, 0, 0)).LookVector.Y < p11;
+end;
+function onTouchVelocity(p12, p13)
+	local l__AssemblyLinearVelocity__29 = p12.AssemblyLinearVelocity;
+	if 0.5 <= l__AssemblyLinearVelocity__29.Magnitude then
+		p13.AssemblyAngularVelocity = p13.CFrame:VectorToObjectSpace(l__AssemblyLinearVelocity__29);
+	end;
+end;
+function ForceUpwards(p14)
+	if tonumber(p14) then
+		if l__HumanoidRootPart__1 then
+			local v30 = Instance.new("BodyVelocity");
+			v30.Name = "forcedSpeedUpwards";
+			v30.Parent = l__HumanoidRootPart__1;
+			v30.MaxForce = Vector3.new(0, (1 / 0), 0);
+			v30.Velocity = p14;
+			game.Debris:AddItem(v30, 0.0176715);
+		end;
+	end;
+end;
+local u21 = {};
+function ConnectTouchEvent(p15, p16)
+	if p15 == nil then
+		return nil;
+	end;
+	local v31 = p15.Touched:Connect(function(p17)
+		p16(p17, p15);
+	end);
+	l__table_insert__14(u21, v31);
+	return v31;
+end;
+local u22 = false;
+local l__RunService__23 = game:GetService("RunService");
+function Kill()
+	if u22 == true then
+		return;
+	end;
+	u22 = true;
+	local v32, v33, v34 = pairs(u21);
+	while true do
+		local v35 = v32(v33, v34);
+		if v35 then
+
+		else
+			break;
+		end;
+		v34 = v35;
+		u21[v35]:Disconnect();
+		u21[v35] = nil;	
+	end;
+	l__RunService__23:UnbindFromRenderStep("StankyPhysics");
+end;
+function CheckReflectPoint(p18, p19)
+	local v36 = p18.AssemblyLinearVelocity * l__Vector3_new__4(1, 0, 1);
+	local v37 = p18.CFrame.LookVector:Dot(v36.Unit);
+	local v38, v39, v40 = Raycast(p18.Position, v36.Unit * (2 - p18.CFrame.LookVector:Dot(v36.Unit) / 1.3) + (p19 or Vector3.zero), u15);
+	local v41 = nil;
+	if v38 then
+		v41 = v36.Unit - 2 * v36.Unit:Dot(v40) * v40;
+	end;
+	return v41;
+end;
+u15.FilterDescendantsInstances = u13;
+local v42 = Instance.new("BodyGyro");
+v42.Name = "GyroSlowedDownStanding";
+v42.CFrame = CFrame.new(l__Torso__4.CFrame.LookVector);
+v42.D = 335;
+v42.P = 2555;
+v42.MaxTorque = Vector3.new(40000, 0, 40000);
+v42.Parent = v2.Head;
+ConnectTouchEvent(l__Torso__4, onTouchVelocity);
+ConnectTouchEvent(l__Head__3, onTouchVelocity);
+ConnectTouchEvent(v2:FindFirstChild("Right Arm"), onTouchVelocity);
+ConnectTouchEvent(v2:FindFirstChild("Left Arm"), onTouchVelocity);
+local l__task_spawn__24 = task.spawn;
+local u25 = 0;
+local u26 = false;
+local u27 = { "Jumping", "Freefall" };
+l__table_insert__14(u21, l__Humanoid__3.StateChanged:Connect(function(p20, p21)
+	p20 = p20.Name;
+	p21 = p21.Name;
+	u6 = p21;
+	if p21 == "Dead" then
+		Kill();
+		return;
+	end;
+	if p21 == "Landed" then
+		if l__tick__8() - u7 >= 1 then
+			l__task_spawn__24(Bounce);
+		end;
+		return;
+	end;
+	if p21 == "GettingUp" then
+		ForceUpwards((l__Vector3_new__4(0, math.random(30, 50), 0)));
+	end;
+	if p21 == "Jumping" then
+		u25 = l__tick__8();
+		u26 = true;
+		SetJump(true);
+		return;
+	end;
+	if not (not table.find(u27, p21)) or u26 ~= true then
+		return;
+	end;
+	u26 = false;
+	SetJump(false);
+end));
+l__table_insert__14(u21, v2.ChildAdded:Connect(legfloat));
+l__table_insert__14(u21, v2.ChildRemoved:Connect(legfloat));
+l__table_insert__14(u21, l__UserInputService__6.InputBegan:Connect(function(p22, p23)
+	if not (not p23) or not (not l__GuiService__8.MenuIsOpen) or l__UserInputService__6:GetFocusedTextBox() then
+		return;
+	end;
+	if p22.KeyCode == Enum.KeyCode.Space and u6 == "Freefall" and u26 == false and l__Humanoid__3:GetStateEnabled(Enum.HumanoidStateType.Jumping) == true then
+	
+	else
+		
+	end;
+end));
+function ReflectFromTouch(p24)
+	local v43 = -0.5 - 0.1;
+	while true do
+		local v44 = u16.Velocity * l__Vector3_new__4(1, 0, 1);
+		local v45 = CheckReflectPoint(p24, v44.Unit * 5 + Vector3.yAxis * v43);
+		if v45 then
+			u16.Velocity = v45 * v44.Magnitude;
+			return;
+		end;
+		if 0 <= 0.1 then
+			if v43 < 0.5 then
+
+			else
+				break;
+			end;
+		elseif 0.5 < v43 then
+
+		else
+			break;
+		end;
+		v43 = v43 + 0.1;	
+	end;
+end;
+function ConnectReflectFromTouch(p25)
+	if p25 ~= nil then
+		p25.Touched:Connect(function()
+			if u6 == "Freefall" then
+				if u26 == true then
+					ReflectFromTouch(p25);
+				end;
+			end;
+		end);
+	end;
+end;
+ConnectReflectFromTouch(v2:FindFirstChild("Right Arm"));
+ConnectReflectFromTouch(v2:FindFirstChild("Left Arm"));
+local u28 = { "FallingDown", "Seated", "Dead", "PlatformStanding" };
+local u29 = false;
+local u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + l__Torso__4.CFrame.LookVector);
+function updatePhys(p26)
+	local l__Position__46 = l__Torso__4.Position;
+	local v47 = l__Torso__4.AssemblyLinearVelocity * l__Vector3_new__4(1, 0, 1);
+	local l__Y__48 = l__Torso__4.AssemblyLinearVelocity.Y;
+	if 1 <= l__tick__8() - u25 then
+		l__Humanoid__3:SetStateEnabled(Enum.HumanoidStateType.Jumping, true);
+	else
+		l__Humanoid__3:SetStateEnabled(Enum.HumanoidStateType.Jumping, false);
+	end;
+	if u6 ~= "Jumping" then
+		if u6 == "Freefall" then
+			if u26 == true then
+				l__Humanoid__3.AutoRotate = false;
+			else
+				l__Humanoid__3.AutoRotate = true;
+			end;
+		else
+			l__Humanoid__3.AutoRotate = true;
+		end;
+	elseif u26 == true then
+		l__Humanoid__3.AutoRotate = false;
+	else
+		l__Humanoid__3.AutoRotate = true;
+	end;
+	if TiltAngle(0.6) then
+		if u6 ~= "Freefall" then
+			if u6 == "Running" then
+				l__Humanoid__3:ChangeState(Enum.HumanoidStateType.FallingDown);
+			end;
+		else
+			l__Humanoid__3:ChangeState(Enum.HumanoidStateType.FallingDown);
+		end;
+	end;
+	if u26 then
+		if u6 ~= "FallingDown" then
+			local v49 = CheckReflectPoint(l__Torso__4);
+			if v49 then
+				u16.Velocity = v49 * v47.Magnitude;
+			end;
+		end;
+	end;
+	if table.find(u28, u6) then
+		if v42.MaxTorque ~= Vector3.zero then
+			v42.MaxTorque = l__Vector3_new__4(0, 0, 0);
+			local v50, v51, v52 = pairs(l__Torso__4:GetConnectedParts());
+			while true do
+				local v53, v54 = v50(v51, v52);
+				if v53 then
+
+				else
+					break;
+				end;
+				v52 = v53;
+				v54.AssemblyAngularVelocity = Vector3.zero;			
+			end;
+		end;
+	else
+		v42.MaxTorque = l__Vector3_new__4(40000, 0, 40000);
+	end;
+	if u6 ~= "Running" then
+		if u6 ~= "Freefall" then
+			if u6 == "Climbing" then
+				if u6 ~= "Running" then
+					if u6 ~= "Climbing" then
+						if u6 == "Freefall" then
+							if u26 == false then
+								u29 = false;
+								u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + (0 < l__Humanoid__3.MoveDirection.Magnitude and l__Humanoid__3.MoveDirection or l__Torso__4.CFrame.LookVector));
+							elseif u6 == "Freefall" then
+								if u26 == true then
+									if u29 == false then
+										u29 = true;
+										u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + l__Torso__4.CFrame.LookVector);
+									else
+										l__Torso__4.AssemblyAngularVelocity = Vector3.zero;
+									end;
+								end;
+							end;
+						elseif u6 == "Freefall" then
+							if u26 == true then
+								if u29 == false then
+									u29 = true;
+									u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + l__Torso__4.CFrame.LookVector);
+								else
+									l__Torso__4.AssemblyAngularVelocity = Vector3.zero;
+								end;
+							end;
+						end;
+					else
+						u29 = false;
+						u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + (0 < l__Humanoid__3.MoveDirection.Magnitude and l__Humanoid__3.MoveDirection or l__Torso__4.CFrame.LookVector));
+					end;
+				else
+					u29 = false;
+					u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + (0 < l__Humanoid__3.MoveDirection.Magnitude and l__Humanoid__3.MoveDirection or l__Torso__4.CFrame.LookVector));
+				end;
+				v17.CFrame = u30;
+				v17.MaxTorque = l__Vector3_new__4(0, 500000, 0);
+			else
+				v17.MaxTorque = Vector3.zero;
+			end;
+		else
+			if u6 ~= "Running" then
+				if u6 ~= "Climbing" then
+					if u6 == "Freefall" then
+						if u26 == false then
+							u29 = false;
+							u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + (0 < l__Humanoid__3.MoveDirection.Magnitude and l__Humanoid__3.MoveDirection or l__Torso__4.CFrame.LookVector));
+						elseif u6 == "Freefall" then
+							if u26 == true then
+								if u29 == false then
+									u29 = true;
+									u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + l__Torso__4.CFrame.LookVector);
+								else
+									l__Torso__4.AssemblyAngularVelocity = Vector3.zero;
+								end;
+							end;
+						end;
+					elseif u6 == "Freefall" then
+						if u26 == true then
+							if u29 == false then
+								u29 = true;
+								u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + l__Torso__4.CFrame.LookVector);
+							else
+								l__Torso__4.AssemblyAngularVelocity = Vector3.zero;
+							end;
+						end;
+					end;
+				else
+					u29 = false;
+					u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + (0 < l__Humanoid__3.MoveDirection.Magnitude and l__Humanoid__3.MoveDirection or l__Torso__4.CFrame.LookVector));
+				end;
+			else
+				u29 = false;
+				u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + (0 < l__Humanoid__3.MoveDirection.Magnitude and l__Humanoid__3.MoveDirection or l__Torso__4.CFrame.LookVector));
+			end;
+			v17.CFrame = u30;
+			v17.MaxTorque = l__Vector3_new__4(0, 500000, 0);
+		end;
+	else
+		if u6 ~= "Running" then
+			if u6 ~= "Climbing" then
+				if u6 == "Freefall" then
+					if u26 == false then
+						u29 = false;
+						u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + (0 < l__Humanoid__3.MoveDirection.Magnitude and l__Humanoid__3.MoveDirection or l__Torso__4.CFrame.LookVector));
+					elseif u6 == "Freefall" then
+						if u26 == true then
+							if u29 == false then
+								u29 = true;
+								u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + l__Torso__4.CFrame.LookVector);
+							else
+								l__Torso__4.AssemblyAngularVelocity = Vector3.zero;
+							end;
+						end;
+					end;
+				elseif u6 == "Freefall" then
+					if u26 == true then
+						if u29 == false then
+							u29 = true;
+							u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + l__Torso__4.CFrame.LookVector);
+						else
+							l__Torso__4.AssemblyAngularVelocity = Vector3.zero;
+						end;
+					end;
+				end;
+			else
+				u29 = false;
+				u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + (0 < l__Humanoid__3.MoveDirection.Magnitude and l__Humanoid__3.MoveDirection or l__Torso__4.CFrame.LookVector));
+			end;
+		else
+			u29 = false;
+			u30 = CFrame.lookAt(l__Torso__4.Position, l__Torso__4.Position + (0 < l__Humanoid__3.MoveDirection.Magnitude and l__Humanoid__3.MoveDirection or l__Torso__4.CFrame.LookVector));
+		end;
+		v17.CFrame = u30;
+		v17.MaxTorque = l__Vector3_new__4(0, 500000, 0);
+	end;
+	if u6 == "Climbing" then
+		local v55 = l__Humanoid__3.MoveDirection * l__Humanoid__3.WalkSpeed;
+		l__Torso__4.AssemblyLinearVelocity = l__Vector3_new__4(v55.X, l__Torso__4.AssemblyLinearVelocity.Y, v55.Z);
+	end;
+end;
+l__RunService__23:BindToRenderStep("StankyPhysics", Enum.RenderPriority.Character.Value + 1, updatePhys);
+
+
+  function waitForChild(parent, childName)
+local child = parent:findFirstChild(childName)
+if child then return child end
+while true do
+ child = parent.ChildAdded:wait()
+ if child.Name==childName then return child end
+end
+end
+
+-- declarations
+
+local Figure = game.Players.LocalPlayer.Character
+local Torso = waitForChild(Figure, "Torso")
+local Root = waitForChild(Figure, "HumanoidRootPart")
+local gaymen = game:GetService("RunService").Heartbeat:Connect(function()
+				Root.CFrame *= CFrame.new(0, 0.001, 0)
+				if Figure.Humanoid.HipHeight >= 2 then
+					Figure.Humanoid.HipHeight = 0
+				end
+game.Players.LocalPlayer.Character["Left Arm"].CanCollide = true
+game.Players.LocalPlayer.Character["Right Arm"].CanCollide = true
+       		end)
+
+Died = game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Died:Connect(function()
+       gaymen:Disconnect()
+       Died:Disconnect()
+   end)
+local RightShoulder = waitForChild(Torso, "Right Shoulder")
+local LeftShoulder = waitForChild(Torso, "Left Shoulder")
+local RightHip = waitForChild(Torso, "Right Hip")
+local LeftHip = waitForChild(Torso, "Left Hip")
+local Neck = waitForChild(Torso, "Neck")
+local Humanoid = waitForChild(Figure, "Humanoid")
+local pose = "Standing"
+
+
+-- functions
+
+function onRunning(speed)
+	if speed>0 then
+		pose = "Running"
+	else
+		pose = "Standing"
+	end
+end
+
+function onDied()
+	pose = "Dead"
+end
+
+function onJumping()
+	pose = "Jumping"
+end
+
+function onClimbing()
+	pose = "Climbing"
+end
+
+function onGettingUp()
+	pose = "GettingUp"
+end
+
+function onFreeFall()
+	pose = "FreeFall"
+end
+
+function onFallingDown()
+	pose = "FallingDown"
+end
+
+function moveJump()
+	RightShoulder.MaxVelocity = 0.5
+	LeftShoulder.MaxVelocity = 0.5
+	RightShoulder:SetDesiredAngle(3.14)
+	LeftShoulder:SetDesiredAngle(-3.14)
+	RightHip.DesiredAngle = 0
+	LeftHip.DesiredAngle = 0
+end
+
+
+
+
+function moveClimb()
+	RightShoulder.MaxVelocity = 0.5
+	LeftShoulder.MaxVelocity = 0.5
+	RightShoulder.DesiredAngle = -3.14
+	LeftShoulder.DesiredAngle = 3.14
+	RightHip.DesiredAngle = 0
+	LeftHip.DesiredAngle = 0
+end
+
+function hasTool()
+	local RightArm = Figure:findFirstChild("Right Arm")
+	if Figure:FindFirstChildOfClass("Tool") then
+				return true
+	else
+	
+	return false
+	end
+end
+
+function move(time)
+	local amplitude
+	local frequency
+
+	if (pose == "Jumping") then
+		moveJump()
+		return
+	end
+
+	
+
+	if (pose == "Climbing") then
+		moveClimb()
+		return
+	end
+
+	RightShoulder.MaxVelocity = 0.15
+	LeftShoulder.MaxVelocity = 0.15
+	if (pose == "Running") then
+		amplitude = 1
+		frequency = 9
+	else
+		amplitude = 0.1
+		frequency = 1
+	end
+
+	desiredAngle = amplitude * math.sin(time*frequency)
+
+	RightShoulder.DesiredAngle = desiredAngle
+	LeftShoulder.DesiredAngle = desiredAngle
+	RightHip.DesiredAngle = -desiredAngle
+	LeftHip.DesiredAngle = -desiredAngle
+
+	if hasTool() then
+		RightShoulder.DesiredAngle = 1.57
+	end
+end
+
+
+-- connect events
+
+Humanoid.Died:connect(onDied)
+Humanoid.Running:connect(onRunning)
+Humanoid.Jumping:connect(onJumping)
+Humanoid.Climbing:connect(onClimbing)
+Humanoid.GettingUp:connect(onGettingUp)
+Humanoid.FallingDown:connect(onFallingDown)
+
+
+-- main program
+
+local nextTime = 0
+local runService = game:service("RunService");
+
+while Figure.Parent~=nil do
+	time = runService.Stepped:wait()
+	if time > nextTime then
+		move(time)
+		nextTime = time + 0.1
+	end
+end
+end)
