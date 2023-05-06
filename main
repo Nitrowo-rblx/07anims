@@ -717,49 +717,7 @@ Humanoid.FallingDown:connect(onFallingDown)
 
 local nextTime = 0
 local runService = game:service("RunService");
-pcall(function()
-local bevels = false
-for i,v in pairs(workspace:GetDescendants()) do
-	if v:IsA("Part") then
-		v.Material = Enum.Material.SmoothPlastic
-		if bevels == true then
-		if v.Parent.ClassName ~= "Accessory" then
-			if v.Parent.ClassName ~= "Tool" then
-	if not game.Players:FindFirstChild(v.Parent.Name) then
-scale=.4
-b = v
-pcall(function ()
-	v.Mesh:Destroy()
-end)
-Instance.new("SpecialMesh",v)
-pcall(function ()
-	v.Mesh.MeshId = "rbxassetid://95358536"
-end)
 
-if v:FindFirstChildOfClass("Decal") then
-					q = v:FindFirstChildOfClass("Decal")
-			
-				q:Destroy()
-end 				
-b.Mesh.Scale = Vector3.new(b.Size.x*scale,b.Size.y*0.3975,b.Size.z*scale)
-		end	
-		end
-	end
-	end
-	end
-end
-game.Lighting.GlobalShadows = false
-while wait() do 
-for i,v in pairs(workspace:GetDescendants()) do
-	if v:IsA("Part") or v:IsA("MeshPart") then
-		if v.Parent:IsA("Model") and game.Players:FindFirstChild(v.Parent.Name) then
-		v.Material = Enum.Material.SmoothPlastic
-	end
-end
-end
-end
-
-end)
 
 while Figure.Parent~=nil do
 	time = runService.Stepped:wait()
