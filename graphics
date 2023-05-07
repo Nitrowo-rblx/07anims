@@ -32,7 +32,7 @@ game.Lighting.GlobalShadows = false
 while wait() do 
 for i,v in pairs(workspace:GetDescendants()) do
 	if v:IsA("Part") or v:IsA("MeshPart") then
-		if v.Parent:IsA("Model") and game.Players:FindFirstChild(v.Parent.Name) then
+		if v.Parent ~= workspace then
 		v.Material = Enum.Material.SmoothPlastic
 	end
 end
