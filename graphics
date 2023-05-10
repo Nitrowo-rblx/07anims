@@ -39,5 +39,4 @@ for i,v in pairs(workspace:GetDescendants()) do
 	end
 end
 end
-end
 until false
