@@ -29,7 +29,7 @@ b.Mesh.Scale = Vector3.new(b.Size.x*scale,b.Size.y*0.3975,b.Size.z*scale)
 	end
 end
 game.Lighting.GlobalShadows = false
-while wait() do 
+while wait(5) do 
 for i,v in pairs(workspace:GetDescendants()) do
 	if v:IsA("Part") or v:IsA("MeshPart") then
 		if v.Parent ~= workspace then
