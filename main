@@ -94,7 +94,7 @@ function LandTilt()
 			v21 = l__Vector3_new__4(0, 0, -0.41);
 		end;
 		l__AngularVelocity__18.MaxTorque = 6000000;
-		l__AngularVelocity__18.AngularVelocity = v21 * (l__Head__3.AssemblyLinearVelocity.Magnitude / 9);
+		l__AngularVelocity__18.AngularVelocity = v21 * (l__Head__3.Velocity.Magnitude / 9);
 		l__task_wait__5(0.085);
 		while true do
 			l__task_wait__5(0.04);
