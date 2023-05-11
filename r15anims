@@ -1,6 +1,17 @@
 repeat task.wait() until game:IsLoaded()
     wait(.92)
-local IDs= _G.IDS
+local IDs= {
+    ClimbAnim   = 1132461372,
+    FallAnim    = 1132469004,
+    Idle1       = 1132473842,
+    Idle2       = 1132477671,
+    Jump        = 1132489853,
+    Run         = 1132494274,
+    Swim        = 1132500520,
+    SwimIdle    = 1132506407,
+    Walk        = 1132510133,
+}
+
 --[[
  > Confident
     ClimbAnim   = 1069946257,
