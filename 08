@@ -199,7 +199,7 @@ function legfloat()
 	if v27 ~= nil then
 		local v28 = 0;
 	else
-		v28 = 2;
+		v28 = 0;
 	end;
 	l__Humanoid__3.HipHeight = v28;
 	if v27 then
