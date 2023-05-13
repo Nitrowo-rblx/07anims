@@ -87,7 +87,7 @@ local u6 = "Running";
 function LandTilt()
 	local l__AngularVelocity__18 = l__HumanoidRootPart__1:FindFirstChild("Att"):FindFirstChild("AngularVelocity");
 	if l__AngularVelocity__18 then
-		local l__LookVector__19 = l__CFrame_new__2(l__Head__3.Position, l__Head__3.Position + l__Head__3.AssemblyLinearVelocity * l__Vector3_new__4(1, 0, 1)).LookVector;
+		local l__LookVector__19 = l__CFrame_new__2(l__Head__3.Position, l__Head__3.Position + l__Head__3.Velocity * l__Vector3_new__4(1, 0, 1)).LookVector;
 		local l__Unit__20 = l__Head__3.CFrame:vectorToObjectSpace(l__LookVector__19).Unit;
 		if 0 < l__LookVector__19.Magnitude then
 			local v21 = l__Vector3_new__4(l__Unit__20.X, 0, l__Unit__20.Z);
