@@ -1,4 +1,4 @@
- _G.ExtraStabilty = false
+ _G.ExtraStabilty = true
 local Hat = {
 Rename = function(HatID, NAME)
 for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
@@ -283,8 +283,8 @@ while true do
 end
 end
 local c = game:GetService("Players").LocalPlayer.Character
-local c = c
 local char =  game:GetObjects("rbxassetid://5195737219")[1]
+char.Name = c.Name.." (Dummy)"
 char:SetPrimaryPartCFrame(c.Head.CFrame)
 c["Body Colors"]:Clone().Parent = char
 game.Players.LocalPlayer.Character.PrimaryPart = c.Head
@@ -344,7 +344,7 @@ for i,v in pairs(c:GetChildren()) do
 	if v:IsA("Accessory")  then
 --	    v.Handle.CFrame = reanim[v.Name].Handle.CFrame
         math.randomseed(char.Torso.AssemblyLinearVelocity.X*25)
-		v.Handle.AssemblyLinearVelocity = Vector3.new(char.Torso.AssemblyLinearVelocity.X*25, math.random(26.6,32.5)*-1, char.Torso.AssemblyLinearVelocity*25)
+		v.Handle.AssemblyLinearVelocity = Vector3.new(char.Torso.AssemblyLinearVelocity.X*25, 26.65*-1, char.Torso.AssemblyLinearVelocity*25)
 	end
 end
 end
@@ -388,11 +388,25 @@ for _, child in pairs(c:GetChildren()) do
 
 
  for _,v in pairs(c:GetChildren()) do
-       if v:IsA("Accessory")  and v.Name ~= "RectangleHead" and v.Name ~= "RectangleHead-1"  and v.Name ~= "RectangleHead-3" and v.Name ~= "funnihead"  and v.Name ~= "RectangleFace-1" and v.Name ~= "RectangleFace" and v.Name ~= "RectangleFace-2" and v.Name ~= "RectangleHead-2"    then
+       if v:IsA("Accessory")  and v.Name ~= "Rleg" and v.Name ~= "Lleg"  and v.Name ~= "Rarm" and v.Name ~= "funnihead"  and v.Name ~= "Larm" and v.Name ~= "RectangleFace" and v.Name ~= "Tor" and v.Name ~= "RectangleHead-2"    then
       local a = v:Clone()
       if c.Humanoid.RigType == Enum.HumanoidRigType.R6 then
       a.Handle.AccessoryWeld.Part1 = char[a.Handle.AccessoryWeld.Part1.Name]
       else 
+    msh =  Instance.new("SpecialMesh",a)
+    msh.MeshId = a.Handle.MeshId
+    msh.TextureId = a.Handle.TextureID
+    weld = a.Handle:FindFirstChildOfClass("Weld")
+    weld.Parent = a
+    siz = a.Handle.Size
+    a.Handle:Destroy()
+    han = Instance.new("Part",a)
+    han.CanCollide = false
+    han.Size = siz
+    han.Name = "Handle"
+    msh.Parent = han
+    weld.Part0 = han
+    weld.Parent = han
           if    a.Handle.AccessoryWeld.Part1 == c.Head then
                  a.Handle.AccessoryWeld.Part1 = char[a.Handle.AccessoryWeld.Part1.Name]
                  else
@@ -484,8 +498,7 @@ if _G.wackyhead == true then
     end
 
 
-  wait(game.Players.RespawnTime + 0.5)  
-
+  wait(game.Players.RespawnTime + 0.25)  
 	rootPart.CFrame = CFrame.new(rootPart.CFrame.X,-250,rootPart.CFrame.Z) + Vector3.new(0, hipHeight or 4, 0)
 
 
@@ -516,11 +529,12 @@ end
 if _G.wackyhead == true then 
 c.Torso.Neck:Destroy()
     end
-
+c.Humanoid:TakeDamage(c.Humanoid.MaxHealth*9e9)
+c:BreakJoints()
 if c:FindFirstChild("Torso") then
-c.Torso.Neck:Destroy()
+--c.Torso.Neck:Destroy()
 else
-c.Head.Neck:Destroy()
+--c.Head.Neck:Destroy()
 c.Humanoid:TakeDamage(c.Humanoid.MaxHealth)
 end
 
@@ -716,10 +730,10 @@ c["Larm"].Handle.CFrame = char["Left Arm"].CFrame* CFrame.Angles(math.rad(62.5),
  c["Rarm"].Handle.CFrame = char["Right Arm"].CFrame* CFrame.Angles(math.rad(66),math.rad(-25),math.rad(3))* CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
     end)
     pcall(function()
-   c["Lleg"].Handle.CFrame = char["Left Leg"].CFrame* CFrame.Angles(math.rad(-84.95),math.rad(31.5),math.rad(42))  *CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
+   c["Lleg"].Handle.CFrame = char["Left Leg"].CFrame* CFrame.Angles(math.rad(-84.95),math.rad(31.5),math.rad(42))  *CFrame.Angles(0,0,-.001*math.sin(100*tick()))
 end)
   pcall(function()
-c["Rleg"].Handle.CFrame = char["Right Leg"].CFrame* CFrame.Angles(math.rad(84),math.rad(-31.5),math.rad(-64))  *CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
+c["Rleg"].Handle.CFrame = char["Right Leg"].CFrame* CFrame.Angles(math.rad(84),math.rad(-31.5),math.rad(-64))  *CFrame.Angles(0,0,-.001*math.sin(100*tick()))
 end)
 pcall(function()
           for _,v in pairs(c:GetChildren()) do
@@ -727,8 +741,12 @@ pcall(function()
 if c.Humanoid.RigType == Enum.HumanoidRigType.R6 then
 v.Handle.CFrame = char[v.Name].Handle.CFrame * CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
 else
-if char[v.Name].Handle.AccessoryWeld.Part1 ~= "Head" then
-v.Handle.CFrame = char[v.Name].Handle.CFrame * CFrame.new(0,0.15,0) * CFrame.Angles(0,0,-.0005*math.sin(100*tick())) 
+if  char[v.Name].Handle:FindFirstChildOfClass("Weld") then
+if char[v.Name].Handle.AccessoryWeld.Part1 ~= char.Head then
+v.Handle.CFrame = char[v.Name].Handle.CFrame * CFrame.new(0,0.2,0) * CFrame.Angles(0,0,-.0005*math.sin(100*tick())) 
+elseif char[v.Name].Handle.AccessoryWeld.Part1 == char.Head then
+v.Handle.CFrame = char[v.Name].Handle.CFrame * CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
+end
 else
 v.Handle.CFrame = char[v.Name].Handle.CFrame * CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
 end
@@ -760,6 +778,7 @@ end
 end
 	settings().Physics.AllowSleep = false
 if _G.ExtraStabilty == true then
+pcall(function()
 for _,v in pairs(c:GetDescendants()) do
 if v:IsA("Accessory") then
 	if game:GetService("RunService").Heartbeat:Wait() > 0.2 then
@@ -780,6 +799,7 @@ v.Handle.Anchored = false
     end
 	end
 	end
+	end)
 	end
 end)
 
@@ -798,7 +818,7 @@ local function respawnrequest()
     ws.CurrentCamera.CFrame = cameraCframe
 end
 
-connect:Disconnect()
+
 Noclipping:Disconnect()
 local spamRequests = true
 spawn(function()
@@ -811,7 +831,7 @@ wait(0.5)
 
 spamRequests = false
 wait(game.Players.RespawnTime)
-
+connect:Disconnect()
 char:Destroy()
 velocity:Disconnect()
 end)
