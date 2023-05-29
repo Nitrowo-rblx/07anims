@@ -9305,6 +9305,15 @@ plr.CharacterAdded:Connect(function(c)
 end)
 function _R6()
 	function r6()
+
+local Figure = game.Players.LocalPlayer.Character
+
+	local Char = Figure
+	local Hum = Figure.Humanoid or Char:FindFirstChildOfClass("AnimationController")
+
+	for i,v in next, Hum:GetPlayingAnimationTracks() do
+		v:Stop()
+	end
 	local Figure = char
 	local Torso = Figure:WaitForChild("Torso")
 	local RightShoulder = Torso:WaitForChild("Right Shoulder")
@@ -9955,7 +9964,15 @@ end
 
 function _R15()
 	local function r15()
-		
+
+local Figure = game.Players.LocalPlayer.Character
+
+	local Char = Figure
+	local Hum = Figure.Humanoid or Char:FindFirstChildOfClass("AnimationController")
+
+	for i,v in next, Hum:GetPlayingAnimationTracks() do
+		v:Stop()
+	end
 	local Character = char
 	local Humanoid = Character:WaitForChild("Humanoid")
 	local pose = "Standing"
@@ -9987,15 +10004,14 @@ function _R15()
 	local animTable = {}
 	local animNames = { 
 		idle = 	{	
-					{ id = "http://www.roblox.com/asset/?id=507766666", weight = 1 },
-					{ id = "http://www.roblox.com/asset/?id=507766951", weight = 1 },
-					{ id = "http://www.roblox.com/asset/?id=507766388", weight = 9 }
+					{ id = workspace[game.Players.LocalPlayer.Name].Animate.idle.Animation2.AnimationId, weight = 1 },
+					{ id = workspace[game.Players.LocalPlayer.Name].Animate.idle.Animation1.AnimationId, weight = 9 }
 				},
 		walk = 	{ 	
-					{ id = "http://www.roblox.com/asset/?id=507777826", weight = 10 } 
+					{ id = workspace[game.Players.LocalPlayer.Name].Animate.walk.WalkAnim.AnimationId, weight = 10 } 
 				}, 
 		run = 	{
-					{ id = "http://www.roblox.com/asset/?id=507767714", weight = 10 } 
+					{ id = workspace[game.Players.LocalPlayer.Name].Animate.run.RunAnim.AnimationId, weight = 10 } 
 				}, 
 		swim = 	{
 					{ id = "http://www.roblox.com/asset/?id=507784897", weight = 10 } 
@@ -10004,10 +10020,10 @@ function _R15()
 					{ id = "http://www.roblox.com/asset/?id=507785072", weight = 10 } 
 				}, 
 		jump = 	{
-					{ id = "http://www.roblox.com/asset/?id=507765000", weight = 10 } 
+					{ id = workspace[game.Players.LocalPlayer.Name].Animate.jump.JumpAnim.AnimationId, weight = 10 } 
 				}, 
 		fall = 	{
-					{ id = "http://www.roblox.com/asset/?id=507767968", weight = 10 } 
+					{ id = workspace[game.Players.LocalPlayer.Name].Animate.fall.FallAnim.AnimationId, weight = 10 } 
 				}, 
 		climb = {
 					{ id = "http://www.roblox.com/asset/?id=507765644", weight = 10 } 
