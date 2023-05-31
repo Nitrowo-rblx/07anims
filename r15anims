@@ -1,15 +1,16 @@
 repeat task.wait() until game:IsLoaded()
-    wait(.92)
-local IDs= {
-    ClimbAnim   = 1132461372,
+    wait(.05)
+local IDs={
+    ClimbAnim   = 1069946257,
     FallAnim    = 1132469004,
-    Idle1       = 1132473842,
-    Idle2       = 1132477671,
-    Jump        = 1132489853,
-    Run         = 1132494274,
-    Swim        = 1132500520,
-    SwimIdle    = 1132506407,
+    Idle1       = 10921132962,
+    Idle2       = 10921133721,
+    Jump        = 1014394726,
+    Run         = 10921135644,
+    Swim        = 10921138209,
+    SwimIdle    = 616166655,
     Walk        = 1132510133,
+
 }
 
 --[[
@@ -23,7 +24,18 @@ local IDs= {
     Swim        = 1070009914,
     SwimIdle    = 1070012133,
     Walk        = 1070017263,
-
+    
+> Custom
+    ClimbAnim   = 1069946257,
+    FallAnim    = 1132469004,
+    Idle1       = 1014390418,
+    Idle2       = 1014398616,
+    Jump        = 1014394726,
+    Run         = 1150967949,
+    Swim        = 1014406523,
+    SwimIdle    = 616166655,
+    Walk        = 1132510133,
+    
  > Popstar
     ClimbAnim   = 1213044953,
     FallAnim    = 1212900995,
