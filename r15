@@ -1,0 +1,361 @@
+local Hat = {
+Rename = function(HatID, NAME)
+for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+    if v:IsA("Accessory") then
+        if game.Players.LocalPlayer.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 then
+            if v.Handle:FindFirstChildWhichIsA("SpecialMesh").MeshId == HatID then
+                v.Name = NAME
+            end
+        elseif game.Players.LocalPlayer.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 and v.Handle.MeshId == HatID then
+                v.Name = NAME
+            elseif game.Players.LocalPlayer.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+            if v.Handle.MeshId == HatID then
+                v.Name = NAME
+                end
+            end
+        end
+    end
+end}
+Hat.Rename("rbxassetid://13415096670", "Rarm")
+Hat.Rename("rbxassetid://13421705040", "Larm")
+Hat.Rename("rbxassetid://13421836805", "Rleg")
+Hat.Rename("rbxassetid://13421798868", "Lleg")
+Hat.Rename("rbxassetid://13421774668", "Tor")
+workspace.FallenPartsDestroyHeight = 0/0
+
+Connection = game.Workspace.DescendantAdded:Connect(function(c)
+    if c.Name == "Animate" then
+        c.Disabled=false        
+    end
+end)
+
+repeat wait() until game.Players.LocalPlayer.Character
+Char = game.Players.LocalPlayer.Character
+Died = game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Died:Connect(function()
+    Connection:Disconnect()
+    Died:Disconnect()
+end)
+
+wait(.1)
+
+function waitForChild(parent, childName)
+local child = parent:findFirstChild(childName)
+if child then return child end
+while true do
+    child = parent.ChildAdded:wait()
+    if child.Name==childName then return child end
+end
+end
+local connections = {}
+local rs = game:GetService("RunService")
+local c = game:GetService("Players").LocalPlayer.Character
+local char =  game:GetObjects("rbxassetid://7531849760")[1]
+char.Humanoid.HipHeight = 2
+
+
+
+
+game:GetService("RunService").Heartbeat:Connect(function(set)
+for i,v in pairs(c:GetChildren()) do
+	if v:IsA("Accessory") then
+--	    v.Handle.CFrame = reanim[v.Name].Handle.CFrame
+		v.Handle.AssemblyLinearVelocity = Vector3.new(char.UpperTorso.AssemblyLinearVelocity.X*15, -26.65, char.UpperTorso.AssemblyLinearVelocity*15)
+	end
+end
+end)
+
+local function force(part,force)
+	local bodyforce = Instance.new("BodyForce", part)
+	bodyforce.Force = force
+end
+
+
+
+for i,v in pairs(c:GetChildren()) do
+	if v:IsA("Accessory") then
+		force(v.Handle,Vector3.new(80,80,80))
+	end
+end
+
+
+for _,BodyParts in next, char:GetDescendants() do
+if BodyParts:IsA("BasePart") or BodyParts:IsA("Part")
+then
+if BodyParts.Name ~= "HumanoidRootPart" then
+BodyParts.Transparency = 1 end end
+end
+
+
+char:SetPrimaryPartCFrame(c.HumanoidRootPart.CFrame)
+c.HumanoidRootPart.Anchored = false
+c["Body Colors"]:Clone().Parent = char
+char.HumanoidRootPart.Anchored = false
+
+char.Parent = workspace
+c.Parent = char
+
+local function NoclipLoop()
+    for _, child in pairs(c:GetDescendants()) do
+        if child:IsA("BasePart") and child.CanCollide == true then
+            child.CanCollide = false
+         
+        end
+    end
+end
+Noclipping = game:GetService('RunService').Stepped:Connect(NoclipLoop)
+
+
+
+for i,v in pairs(c:GetDescendants()) do
+if v:IsA("Accessory") then
+Accessory = v
+      Handle = Accessory.Handle
+      pcall(function() Handle:FindFirstChildOfClass("Weld"):Destroy() end)
+    	local NewWeld = Instance.new("Weld")
+    	NewWeld.Name = "AccessoryWeld"
+    	NewWeld.Part0 = Handle
+    	local Attachment = Handle:FindFirstChildOfClass("Attachment")
+    	if Attachment then
+    		NewWeld.C0 = Attachment.CFrame
+    		NewWeld.C1 = c:FindFirstChild(tostring(Attachment), true).CFrame
+    		NewWeld.Part1 = c:FindFirstChild(tostring(Attachment), true).Parent
+    	else
+    		NewWeld.Part1 = FakeCharacter:FindFirstChild("Head")
+    		NewWeld.C1 = CFrame.new(0,char:FindFirstChild("Head").Size.Y / 2,0) * Accessory.AttachmentPoint:Inverse()
+    	end
+    	Handle.CFrame = NewWeld.Part1.CFrame * NewWeld.C1 * NewWeld.C0:Inverse()
+    	NewWeld.Parent = Accessory.Handle
+
+end
+end
+
+   for _,v in pairs(c:GetChildren()) do
+       if v:IsA("Accessory") then
+      local a = v:Clone()
+
+      a.Handle.AccessoryWeld.Part1 = char[a.Handle.AccessoryWeld.Part1.Name]
+
+a.Parent = char
+a.Handle.Transparency = 1
+           end
+       end
+
+
+   for _,v in pairs(c:GetChildren()) do
+       if v:IsA("Accessory")  then
+v.Handle:BreakJoints()
+           end
+       end 
+       local ch = game.Players.LocalPlayer.Character
+local prt=Instance.new("Model", workspace)
+local z1 =  Instance.new("Part", prt)
+z1.Name="Torso"
+z1.CanCollide = false
+z1.Anchored = true
+local z2  =Instance.new("Part", prt)
+z2.Name="Head"
+z2.Anchored = true
+z2.CanCollide = false
+local z3 =Instance.new("Humanoid", prt)
+z3.Name="Humanoid"
+z1.Position = Vector3.new(0,9999,0)
+z2.Position = Vector3.new(0,9991,0)
+for _, child in pairs(c:GetChildren()) do
+				if child:IsA("BasePart") then
+					child.Anchored = true
+				elseif child:IsA("Accessory") then
+				    child.Handle.Anchored = true
+				end
+			end
+
+		
+ workspace.FallenPartsDestroyHeight = -1500
+ function getRoot(char)
+	local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
+	return rootPart
+end
+		local character = game.Players.LocalPlayer.Character
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+		if humanoid and humanoid.SeatPart then
+			humanoid.Sit = false
+			wait(0.1)
+		end
+	
+		local hipHeight = humanoid and humanoid.HipHeight > 0 and (humanoid.HipHeight + 1)
+		local rootPart = getRoot(character)
+		local rootPartPosition = rootPart.Position
+	
+	
+ game.Players.LocalPlayer.Character=prt
+ game.Players.LocalPlayer.Character=char
+  wait(game.Players.RespawnTime + 0.25) 
+
+rootPart.CFrame = CFrame.new(rootPart.CFrame.X,-250,rootPart.CFrame.Z) + Vector3.new(0, hipHeight or 4, 0)
+for _, child in pairs(c:GetChildren()) do
+				if child:IsA("BasePart") then
+					child.Anchored = false
+				elseif child:IsA("Accessory") then
+				    child.Handle.Anchored = false
+				end
+			end
+c.Humanoid:TakeDamage(c.Humanoid.MaxHealth)
+
+local function Align(Part1, Part0, Position, Angle)
+    game:GetService("RunService").Heartbeat:Connect(function(set)
+        Part1.CFrame = Part0.CFrame * Position * Angle   *CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
+        end)
+    end
+Align(c["Tor"].Handle, char["UpperTorso"], CFrame.new(0,-0.2,0), CFrame.Angles(0,math.rad(0),0)) 
+Align(c["Rarm"].Handle, char["RightLowerArm"], CFrame.new(0,0.3,0),  CFrame.Angles(math.rad(66),math.rad(-25),math.rad(3)))
+Align(c["Rleg"].Handle, char["RightLowerLeg"], CFrame.new(0,0.2,0),  CFrame.Angles(math.rad(84),math.rad(-31.5),math.rad(-64)))
+Align(c["Lleg"].Handle, char["LeftLowerLeg"], CFrame.new(0,0.2,0), CFrame.Angles(math.rad(-84.95),math.rad(31.5),math.rad(42)))
+Align(c["Larm"].Handle, char["LeftLowerArm"], CFrame.new(0,0.3,0),CFrame.Angles(math.rad(62.5),math.rad(20.5),math.rad(6)))
+
+    for _,v in pairs(c:GetChildren()) do
+       if v:IsA("Accessory") and v.Name == "SeeMonkey"  or v.Name == "Pal Hair" or v.Name == "Pink Hair" or v.Name == "Kate Hair" or v.Name == "LavanderHair" then
+v.Handle:ClearAllChildren()
+elseif v:IsA("Accessory") and v.Name ~= "SeeMonkey"  and v.Name ~= "Pal Hair" and v.Name ~= "Pink Hair" and v.Name ~= "Kate Hair" and v.Name ~="LavanderHair"   and v.Name ~= "Head"then
+   Align(v.Handle, char:FindFirstChild(v.Name).Handle, CFrame.new(0,0,0), CFrame.Angles(0,0,0))
+           end
+       end
+
+
+char.Animate:Destroy()
+c.Animate.Disabled = true
+c.Animate.Disabled = false
+c.Animate.Parent = char
+char.Animate.Disabled = true
+char.Animate.Disabled = false
+c.Humanoid.Animator.Parent = char.Humanoid
+workspace.Camera.CameraSubject = char.Humanoid
+
+char.Humanoid.Died:Connect(function()
+local plr = game.Players.LocalPlayer
+   plr.Character = c
+c.Humanoid:Destroy()
+wait(game.Players.RespawnTime)
+char:Destroy()
+end)
+repeat task.wait() until game:IsLoaded()
+    wait(.05)
+    
+local IDs={
+  ClimbAnim   = 616156119,
+    FallAnim    = 616157476,
+    Idle1       = 3489171152,
+    Idle2       = 3489171152,
+    Jump        = 616161997,
+    Run         = 3489173414,
+    Swim        = 616165109,
+    SwimIdle    = 616166655,
+    Walk        = 3489174223,
+
+}
+
+--[[
+ > Confident
+    ClimbAnim   = 1069946257,
+    FallAnim    = 1069973677,
+    Idle1       = 1069977950,
+    Idle2       = 1069987858,
+    Jump        = 1069984524,
+    Run         = 1070001516,
+    Swim        = 1070009914,
+    SwimIdle    = 1070012133,
+    Walk        = 1070017263,
+    
+> Custom
+    ClimbAnim   = 10921132092,
+    FallAnim    = 1132469004,
+    Idle1       = 10921132962,
+    Idle2       = 10921133721,
+    Jump        = 10921137402,
+    Run         = 10921135644,
+    Swim        = 10921138209,
+    SwimIdle    = 616166655,
+    Walk        = 1132510133,
+
+    
+ > Popstar
+    ClimbAnim   = 1213044953,
+    FallAnim    = 1212900995,
+    Idle1       = 1212900985,
+    Idle2       = 1212900985, -- COULDNT FIND A GLOBAL IDLE2 FOR POPSTAR
+    Jump        = 1212954642,
+    Run         = 1212980348,
+    Swim        = 1212852603,
+    SwimIdle    = 1212998578,
+    Walk        = 1212980338,
+
+ > Princess
+    ClimbAnim   = 940996062,
+    FallAnim    = 941000007,
+    Idle1       = 941003647,
+    Idle2       = 941013098,
+    Jump        = 941008832,
+    Run         = 941015281,
+    Swim        = 941018893,
+    SwimIdle    = 941025398,
+    Walk        = 941028902,
+
+ > Zombie
+    ClimbAnim   = 616156119,
+    FallAnim    = 616157476,
+    Idle1       = 3489171152,
+    Idle2       = 3489171152,
+    Jump        = 616161997,
+    Run         = 3489173414,
+    Swim        = 616165109,
+    SwimIdle    = 616166655,
+    Walk        = 3489174223,
+
+ > Cowboy 
+    ClimbAnim   = 1014380606,
+    FallAnim    = 1014384571,
+    Idle1       = 1014390418,
+    Idle2       = 1014398616,
+    Jump        = 1014394726,
+    Run         = 1014401683,
+    Swim        = 1014406523,
+    SwimIdle    = 1014411816,
+    Walk        = 1014421541,
+
+ > Patrol 
+    ClimbAnim   = 1148811837,
+    FallAnim    = 1148863382,
+    Idle1       = 1149612882,
+    Idle2       = 1150842221,
+    Jump        = 1150944216,
+    Run         = 1150967949,
+    Swim        = 1151204998,
+    SwimIdle    = 1151221899,
+    Walk        = 1151231493,
+
+ > Sneaky
+    ClimbAnim   = 1132461372,
+    FallAnim    = 1132469004,
+    Idle1       = 1132473842,
+    Idle2       = 1132477671,
+    Jump        = 1132489853,
+    Run         = 1132494274,
+    Swim        = 1132500520,
+    SwimIdle    = 1132506407,
+    Walk        = 1132510133,
+]]
+
+
+for i,v in pairs(game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
+    v:Stop()
+end
+
+game.Players.LocalPlayer.Character.Animate.climb.ClimbAnim.AnimationId    = "http://www.roblox.com/asset/?id="..IDs.ClimbAnim
+game.Players.LocalPlayer.Character.Animate.fall.FallAnim.AnimationId      = "http://www.roblox.com/asset/?id="..IDs.FallAnim
+game.Players.LocalPlayer.Character.Animate.idle.Animation1.AnimationId    = "http://www.roblox.com/asset/?id="..IDs.Idle1
+game.Players.LocalPlayer.Character.Animate.idle.Animation2.AnimationId    = "http://www.roblox.com/asset/?id="..IDs.Idle2
+game.Players.LocalPlayer.Character.Animate.jump.JumpAnim.AnimationId      = "http://www.roblox.com/asset/?id="..IDs.Jump
+game.Players.LocalPlayer.Character.Animate.run.RunAnim.AnimationId        = "http://www.roblox.com/asset/?id="..IDs.Run
+game.Players.LocalPlayer.Character.Animate.swim.Swim.AnimationId          = "http://www.roblox.com/asset/?id="..IDs.Swim
+game.Players.LocalPlayer.Character.Animate.swimidle.SwimIdle.AnimationId  = "http://www.roblox.com/asset/?id="..IDs.SwimIdle
+game.Players.LocalPlayer.Character.Animate.walk.WalkAnim.AnimationId      = "http://www.roblox.com/asset/?id="..IDs.Walk
+game.Players.LocalPlayer.Character.Animate.idle.Animation2.Weight.Value   = "1"; game.Players.LocalPlayer.Character.Animate.idle.Animation1.Weight.Value   = "10"
+  
