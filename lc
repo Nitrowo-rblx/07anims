@@ -1,6 +1,6 @@
 
 game.Players.LocalPlayer.Character.Animate:Destroy()
-wait(0.5)
+wait(0.25)
 --here it goes
 local stopeverything = false
 KEYHOLD = false
@@ -93,7 +93,7 @@ GUN.Parent = Character
 local shade = GUN.Base.Color
 local alreadyfixing = false
 local Effects = Instance.new("Folder")
-Effects.Parent = Character
+Effects.Parent = workspace
 local eeeblock = Instance.new("Part")
 eeeblock.Name = "eeeblock"
 eeeblock.CanCollide = false
@@ -414,59 +414,44 @@ end
 SWAIT = Swait
 local S = Instance.new("Sound")
 local c = game.Players.LocalPlayer.Character
-c["Sniper"].Handle:BreakJoints()
-
-local function Align(Part1, Part0, Position, Angle)
-   Part1.CanCollide = false
-local density = 1 --Put your number
-
-local friction = 0.3
-
-local elasticity = 0.5
-
-local frictionWeight = 1
-
-local elasticityWeight = 1
-
-local physProperties = PhysicalProperties.new(density, friction, elasticity, frictionWeight, elasticityWeight)
-Part1.CustomPhysicalProperties = physProperties
-   local AlignPos = Instance.new("AlignPosition")
-   AlignPos.ApplyAtCenterOfMass = true
-   AlignPos.MaxForce = 100000
-   AlignPos.MaxVelocity = math.huge
-   AlignPos.ReactionForceEnabled = false
-   AlignPos.Responsiveness = 200
-   AlignPos.RigidityEnabled = true
-   AlignPos.Parent = Part1
-
-   local AlignOri = Instance.new("AlignOrientation")
-   AlignOri.MaxAngularVelocity = math.huge
-   AlignOri.MaxTorque = 100000
-   AlignOri.PrimaryAxisOnly = false
-   AlignOri.ReactionTorqueEnabled = false
-   AlignOri.Responsiveness = 200
-   AlignOri.RigidityEnabled = false
-   AlignOri.Parent = Part1
-
-   local at1 = Instance.new("Attachment")
-   at1.Parent = Part1
-   local at2 = Instance.new("Attachment")
-   at2.Parent = Part0
-   at2.Orientation = Angle
-   at2.Position = Position
-   
-   AlignPos.Attachment0 = at1
-   AlignPos.Attachment1 = at2
-   AlignOri.Attachment0 = at1
-   AlignOri.Attachment1 = at2
-   
+c["Starslayer Railgun"].Handle:BreakJoints()
+local function Align(Part0, Part1)
+	Part0.CustomPhysicalProperties = PhysicalProperties.new(0.0001, 0.0001, 0.0001, 0.0001, 0.0001)
+	local att1 = Instance.new("Attachment")
+	att1.Orientation = Vector3.new(0, 0, 0)
+	att1.Position = Vector3.new(0, 0, 0)
+	att1.Archivable = true
+	local att0 = att1:Clone()
+    	local ape = Instance.new("AlignPosition", Part0)
+    	ape.ApplyAtCenterOfMass = false
+    	ape.MaxForce = math.huge
+    	ape.MaxVelocity = math.huge
+    	ape.ReactionForceEnabled = false
+    	ape.Responsiveness = 200
+    	ape.Attachment1 = att1
+    	ape.Attachment0 = att0
+    	ape.Name = "AlignPosition"
+    	ape.RigidityEnabled = true
+	local ao = Instance.new("AlignOrientation", att0)
+	ao.MaxAngularVelocity = math.huge
+	ao.MaxTorque = math.huge
+	ao.PrimaryAxisOnly = false
+	ao.ReactionTorqueEnabled = false
+	ao.Responsiveness = 200
+	ao.Attachment1 = att1
+	ao.Attachment0 = att0
+	ao.RigidityEnabled = false
+	att1.Parent = Part1
+	att1.Name = "Attachment"
+	att0.Parent = Part0
+	att0.Name =  "Attachment"
 end
 
-Align(c["Sniper"].Handle, c["Right Arm"], Vector3.new(0,0,0),Vector3.new(0,0,0))
+Align(c["Starslayer Railgun"].Handle, c["Right Arm"])
 local att = c["Right Arm"].Attachment
 att.Parent = c["Right Arm"]
 att.Position = Vector3.new(0, -1.5, -0.7)
-att.Orientation = Vector3.new(-0, 90, -95)
+att.Orientation = Vector3.new(-0, 90, -45)
 local SIZE = 1
 function AttackGyro()
 	local GYRO = Instance.new("BodyGyro",RootPart)
@@ -518,27 +503,285 @@ coroutine.resume(coroutine.create(function()
 		end
 	end
 end))
+
+local function randomstring()
+	local length = MRANDOM(10,20)
+	local array = {}
+	for i = 1,length do
+		array[i] = string.char(MRANDOM(14,126))
+	end
+	return table.concat(array)
+end
+function CreatePart(FORMFACTOR,PARENT,MATERIAL,REFLECTANCE,TRANSPARENCY,BRICKCOLOR,NAME,SIZE,ANCHOR)
+	local NEWPART = Instance.new("Part")
+	NEWPART.Massless = true
+	NEWPART.formFactor = FORMFACTOR
+	NEWPART.Reflectance = REFLECTANCE
+	NEWPART.Transparency = TRANSPARENCY
+	NEWPART.CanCollide = false
+	NEWPART.Locked = true
+	NEWPART.Anchored = true
+	if ANCHOR == false then
+		NEWPART.Anchored = false
+	end
+	NEWPART.Color = BRICKCOLOR
+	NEWPART.Name = randomstring()
+	NEWPART.Size = SIZE
+	NEWPART.Position = Torso.Position
+	NEWPART.Material = MATERIAL
+	NEWPART:BreakJoints()
+	NEWPART.Parent = PARENT
+	return NEWPART
+end
+function Effect(Table)
+	local TYPE = (Table.EffectType or "Sphere")
+	local SIZE = (Table.Size or Vector3.new(1,1,1))
+	local ENDSIZE = (Table.Size2 or Vector3.new())
+	local TRANSPARENCY = (Table.Transparency or 0)
+	local ENDTRANSPARENCY = (Table.Transparency2 or 1)
+	local CFRAME = (Table.CFrame or Torso.CFrame)
+	local MOVEDIRECTION = (Table.MoveToPos or nil)
+	local ROTATION1 = (Table.RotationX or 0)
+	local ROTATION2 = (Table.RotationY or 0)
+	local ROTATION3 = (Table.RotationZ or 0)
+	local MATERIAL = (Table.Material or "Neon")
+	local COLOR = (Table.Color or shade)
+	local hOK,sOK,vOK = Color3.toHSV(COLOR)
+	local RAINBOWPART = false
+	if sOK > .1 then
+		RAINBOWPART = true
+	end
+	local TIME = (Table.Time or 45)
+	local SOUNDID = (Table.SoundID or nil)
+	local SOUNDPITCH = (Table.SoundPitch or nil)
+	local SOUNDVOLUME = (Table.SoundVolume or nil)
+	local USEBOOMERANGMATH = (Table.UseBoomerangMath or false)
+	local BOOMERANG = (Table.Boomerang or 0)
+	local SIZEBOOMERANG = (Table.SizeBoomerang or 0)
+	coroutine.resume(coroutine.create(function()
+		local PLAYSSOUND = false
+		local SOUND = nil
+		local EFFECT = CreatePart(3,Effects,MATERIAL,0,TRANSPARENCY,shade,"Effect",Vector3.new(1,1,1),true)
+		if RAINBOWPART then
+			coroutine.resume(coroutine.create(function()
+				while not stopeverything do
+					EFFECT.Color = GUN.NeonParts.Color
+					swait()
+				end
+			end))
+		end
+		if SOUNDID ~= nil and SOUNDPITCH ~= nil and SOUNDVOLUME ~= nil then
+			PLAYSSOUND = true
+			SOUND = CreateSound(SOUNDID,EFFECT,SOUNDVOLUME,SOUNDPITCH,false)
+		end
+		EFFECT.Color = COLOR
+		local MSH = nil
+		if TYPE == "Sphere" then
+			MSH = CreateMesh("SpecialMesh",EFFECT,"Sphere","","",SIZE,Vector3.new())
+		elseif TYPE == "Block" or TYPE == "Box" then
+			MSH = Instance.new("BlockMesh",EFFECT)
+			MSH.Scale = SIZE
+		elseif TYPE == "Wave" then
+			MSH = CreateMesh("SpecialMesh",EFFECT,"FileMesh","20329976","",SIZE,Vector3.new(0,0,-SIZE.X/8))
+		elseif TYPE == "Ring" then
+			MSH = CreateMesh("SpecialMesh",EFFECT,"FileMesh","559831844","",Vector3.new(SIZE.X,SIZE.X,0.1),Vector3.new())
+		elseif TYPE == "Slash" then
+			MSH = CreateMesh("SpecialMesh",EFFECT,"FileMesh","662586858","",Vector3.new(SIZE.X/10,0,SIZE.X/10),Vector3.new())
+		elseif TYPE == "Round Slash" then
+			MSH = CreateMesh("SpecialMesh",EFFECT,"FileMesh","662585058","",Vector3.new(SIZE.X/10,0,SIZE.X/10),Vector3.new())
+		elseif TYPE == "Swirl" then
+			MSH = CreateMesh("SpecialMesh",EFFECT,"FileMesh","168892432","",SIZE,Vector3.new())
+		elseif TYPE == "Skull" then
+			MSH = CreateMesh("SpecialMesh",EFFECT,"FileMesh","4770583","",SIZE,Vector3.new())
+		elseif TYPE == "Crystal" then
+			MSH = CreateMesh("SpecialMesh",EFFECT,"FileMesh","9756362","",SIZE,Vector3.new())
+		end
+		if MSH ~= nil then
+			local BOOMR1 = 1+BOOMERANG/50
+			local BOOMR2 = 1+SIZEBOOMERANG/50
+			local MOVESPEED = nil
+			if MOVEDIRECTION ~= nil then
+				if USEBOOMERANGMATH == true then
+					MOVESPEED = ((CFRAME.p - MOVEDIRECTION).Magnitude/TIME)*BOOMR1
+				else
+					MOVESPEED = ((CFRAME.p - MOVEDIRECTION).Magnitude/TIME)
+				end
+			end
+			local GROWTH = nil
+			if USEBOOMERANGMATH == true then
+				GROWTH = (SIZE - ENDSIZE)*(BOOMR2+1)
+			else
+				GROWTH = (SIZE - ENDSIZE)
+			end
+			local TRANS = TRANSPARENCY - ENDTRANSPARENCY
+			if TYPE == "Block" then
+				EFFECT.CFrame = CFRAME*CFrame.Angles(math.rad(math.random(0,360)),math.rad(math.random(0,360)),math.rad(math.random(0,360)))
+			else
+				EFFECT.CFrame = CFRAME
+			end
+			if USEBOOMERANGMATH == true then
+				for LOOP = 1,TIME+1 do
+					swait()
+					MSH.Scale = MSH.Scale - (Vector3.new((GROWTH.X)*((1 - (LOOP/TIME)*BOOMR2)),(GROWTH.Y)*((1 - (LOOP/TIME)*BOOMR2)),(GROWTH.Z)*((1 - (LOOP/TIME)*BOOMR2)))*BOOMR2)/TIME
+					if TYPE == "Wave" then
+						MSH.Offset = Vector3.new(0,0,-MSH.Scale.Z/8)
+					end
+					EFFECT.Transparency = EFFECT.Transparency - TRANS/TIME
+					if TYPE == "Block" then
+						EFFECT.CFrame = CFRAME*CFrame.Angles(math.rad(math.random(0,360)),math.rad(math.random(0,360)),math.rad(math.random(0,360)))
+					else
+						EFFECT.CFrame = EFFECT.CFrame*CFrame.Angles(math.rad(ROTATION1),math.rad(ROTATION2),math.rad(ROTATION3))
+					end
+					if MOVEDIRECTION ~= nil then
+						local ORI = EFFECT.Orientation
+						EFFECT.CFrame = CFrame.new(EFFECT.Position,MOVEDIRECTION)*CFrame.new(0,0,-(MOVESPEED)*((1 - (LOOP/TIME)*BOOMR1)))
+						EFFECT.Orientation = ORI
+					end
+				end
+			else
+				for LOOP = 1,TIME+1 do
+					swait()
+					MSH.Scale = MSH.Scale - GROWTH/TIME
+					if TYPE == "Wave" then
+						MSH.Offset = Vector3.new(0,0,-MSH.Scale.Z/8)
+					end
+					EFFECT.Transparency = EFFECT.Transparency - TRANS/TIME
+					if TYPE == "Block" then
+						EFFECT.CFrame = CFRAME*CFrame.Angles(math.rad(math.random(0,360)),math.rad(math.random(0,360)),math.rad(math.random(0,360)))
+					else
+						EFFECT.CFrame = EFFECT.CFrame*CFrame.Angles(math.rad(ROTATION1),math.rad(ROTATION2),math.rad(ROTATION3))
+					end
+					if MOVEDIRECTION ~= nil then
+						local ORI = EFFECT.Orientation
+						EFFECT.CFrame = CFrame.new(EFFECT.Position,MOVEDIRECTION)*CFrame.new(0,0,-MOVESPEED)
+						EFFECT.Orientation = ORI
+					end
+				end
+			end
+			EFFECT.Transparency = 1
+			if PLAYSSOUND == false then
+				EFFECT:Destroy()
+			else
+				repeat if stopeverything then wait(math.huge) end swait() until EFFECT:FindFirstChildOfClass("Sound") == nil
+				EFFECT:Destroy()
+			end
+		else
+			if PLAYSSOUND == false then
+				EFFECT:Destroy()
+			else
+				repeat if stopeverything then wait(math.huge) end swait() until EFFECT:FindFirstChildOfClass("Sound") == nil
+				EFFECT:Destroy()
+			end
+		end
+	end))
+end
+function Lightning(Part0,Part1,Timess,Offset,Color,Timer,sSize,eSize,Trans,Boomer,sBoomer,Trans2)
+	local magz = (Part0 - Part1).Magnitude
+	local Times = math.floor(math.clamp(magz/10,1,20))
+	local curpos = Part0
+	local trz = {
+		-Offset,
+		Offset
+	}
+	for i = 1,Times do
+		local li = Instance.new("Part",Effects)
+		li.Name = randomstring()
+		li.TopSurface = 0
+		li.Material = "Neon"
+		li.BottomSurface = 0
+		li.Anchored = true
+		li.Locked = true
+		li.Transparency = 0
+		li.Color = Color
+		li.formFactor = "Custom"
+		li.CanCollide = false
+		li.Size = Vector3.new(0.1,0.1,magz/Times)
+		local Offzet = Vector3.new(trz[math.random(1,2)],trz[math.random(1,2)],trz[math.random(1,2)])
+		local trolpos = CFrame.new(curpos,Part1) * CFrame.new(0,0,magz/Times).p + Offzet
+		if Times == i then
+			local magz2 = (curpos - Part1).Magnitude
+			li.Size = Vector3.new(0.1,0.1,magz2)
+			li.CFrame = CFrame.new(curpos,Part1) * CFrame.new(0,0,-magz2/2)
+		else
+			li.CFrame = CFrame.new(curpos,trolpos) * CFrame.new(0,0,magz/Times/2)
+		end
+		curpos = li.CFrame * CFrame.new(0,0,magz/Times/2).p
+		li:Destroy()
+		Effect({Time = Timer,EffectType = "Box",Size = Vector3.new(sSize,sSize,li.Size.Z),Size2 = Vector3.new(eSize,eSize,li.Size.Z),Transparency = Trans,Transparency2 = Trans2 or 1,CFrame = li.CFrame,MoveToPos = nil,RotationX = nil,RotationY = nil,RotationZ = nil,Material = "Neon",Color = li.Color,SoundID = nil,SoundPitch = nil,SoundVolume = nil,UseBoomerangMath = Boomer,Boomerang = 0,SizeBoomerang = sBoomer})
+	end
+end
+function CreateSound(ID,PARENT,VOLUME,PITCH,DOESLOOP)
+	local NEWSOUND = nil
+	coroutine.resume(coroutine.create(function()
+		NEWSOUND = S:Clone()
+		NEWSOUND.Parent = PARENT
+		NEWSOUND.Volume = VOLUME
+		NEWSOUND.Pitch = PITCH
+		NEWSOUND.SoundId = "rbxassetid://"..ID
+		NEWSOUND:play()
+		if DOESLOOP == true then
+			NEWSOUND.Looped = true
+		else
+			coroutine.resume(coroutine.create(function()
+				pcall(function()
+					repeat if stopeverything then wait(math.huge) end Swait() until NEWSOUND.Playing == false
+					NEWSOUND:Destroy()
+				end)
+			end))
+		end
+	end))
+	return NEWSOUND
+end
+local Holetwo = c["Starslayer Railgun"].Handle
 function attackone()
 	attack = true
 	walkspeed = 16
 	AttackGyro()
-	for i = 0,.5,.05 do
+	for i = 0,0.5,0.05 do
 		swait()
-		RootJoint.C0 = Clerp(RootJoint.C0,ROOTC0 * CFrame.new(0 + .5 * math.cos(sine/50),0,0 - .5 * math.sin(sine/50)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(30)),.7/3)
+		RootJoint.C0 = Clerp(RootJoint.C0,ROOTC0 * CFrame.new(0 + .5 * math.cos(sine/50),0,3 - .5 * math.sin(sine/50)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(30)),0.7/3)
 		Neck.C0 = Clerp(Neck.C0,nc0 * CFrame.new() * CFrame.Angles(math.rad(15),math.rad(0),math.rad(-30)),1/3)
-		RightShoulder.C0 = Clerp(RightShoulder.C0,CFrame.new(1.5,.5,0) * CFrame.Angles(math.rad(90),math.rad(0),math.rad(30)) * rscp,1/3)
-		LeftShoulder.C0 = Clerp(LeftShoulder.C0,CFrame.new(-1.5,.5,0) * CFrame.Angles(math.rad(30),math.rad(0),math.rad(0)) * lscp,1/3)
-		RightHip.C0 = Clerp(RightHip.C0,CFrame.new(1,-.5,-.5) * CFrame.Angles(math.rad(-15 + 9 * math.cos(sine/74)),math.rad(80),math.rad(0)) * CFrame.Angles(math.rad(0 + 5 * math.cos(sine/37)),math.rad(0),math.rad(0)),.7/3)
-		LeftHip.C0 = Clerp(LeftHip.C0,CFrame.new(-1,-1,0) * CFrame.Angles(math.rad(-15 - 9 * math.cos(sine/54)),math.rad(-80),math.rad(0)) * CFrame.Angles(math.rad(0 - 5 * math.cos(sine/41)),math.rad(0),math.rad(0)),.7/3)
+		RightShoulder.C0 = Clerp(RightShoulder.C0,CFrame.new(1.5,0.5,0) * CFrame.Angles(math.rad(90),math.rad(0),math.rad(30)) * rscp,1/3)
+		LeftShoulder.C0 = Clerp(LeftShoulder.C0,CFrame.new(-1.5,0.5,0) * CFrame.Angles(math.rad(30),math.rad(0),math.rad(0)) * lscp,1/3)
+		RightHip.C0 = Clerp(RightHip.C0,CFrame.new(1,-0.5,-0.5) * CFrame.Angles(math.rad(-15 + 9 * math.cos(sine/74)),math.rad(80),math.rad(0)) * CFrame.Angles(math.rad(0 + 5 * math.cos(sine/37)),math.rad(0),math.rad(0)),0.7/3)
+		LeftHip.C0 = Clerp(LeftHip.C0,CFrame.new(-1,-1,0) * CFrame.Angles(math.rad(-15 - 9 * math.cos(sine/54)),math.rad(-80),math.rad(0)) * CFrame.Angles(math.rad(0 - 5 * math.cos(sine/41)),math.rad(0),math.rad(0)),0.7/3)
+		
 	end
-	for i = 0,.5,.075 do
+	Effect({Time = 25,EffectType = "Box",Size = Vector3.new(),Size2 = Vector3.new(3,3,3),Transparency = 0,Transparency2 = 1,CFrame = Holetwo.CFrame,MoveToPos = nil,RotationX = math.random(-1,1),RotationY = math.random(-1,1),RotationZ = math.random(-1,1),Material = "Neon",Color = Color3.new(1,0,0),SoundID = 642890855,SoundPitch = 0.45,SoundVolume = 6,UseBoomerangMath = true,Boomerang = 0,SizeBoomerang = 50})
+	Effect({Time = 25,EffectType = "Box",Size = Vector3.new(),Size2 = Vector3.new(3,3,3),Transparency = 0,Transparency2 = 1,CFrame = Holetwo.CFrame,MoveToPos = nil,RotationX = math.random(-1,1),RotationY = math.random(-1,1),RotationZ = math.random(-1,1),Material = "Neon",Color = shade,SoundID = nil,SoundPitch = nil,SoundVolume = nil,UseBoomerangMath = true,Boomerang = 0,SizeBoomerang = 50})
+	local DISTANCE = (Holetwo.Position - Mouse.Hit.p).Magnitude
+	local killbeam = CreatePart(3,Effects,"Neon",0,0,shade,"Kill Beam",Vector3.new(1,DISTANCE,1))
+	killbeam.CFrame = CFrame.new(Holetwo.Position,Mouse.Hit.p) * CFrame.new(0,0,-DISTANCE/2) * CFrame.Angles(math.rad(90),math.rad(0),math.rad(0))
+	coroutine.resume(coroutine.create(function()
+		for i = 1,25 do
+			swait()
+			killbeam.Transparency = i/25
+		end
+		killbeam:Destroy()
+	end))
+	Lightning(Holetwo.Position,Mouse.Hit.p,15,3.5,Color3.new(0,0,1),25,0,1,0,true,55)
+	Lightning(Holetwo.Position,Mouse.Hit.p,15,3.5,Color3.new(0,0,1),25,0,1,0,true,55)
+	Lightning(Holetwo.Position,Mouse.Hit.p,15,3.5,Color3.new(0,0,1),25,0,1,0,true,55)
+	Lightning(Holetwo.Position,Mouse.Hit.p,15,3.5,Color3.new(0,0,1),25,0,1,0,true,55)
+	Lightning(Holetwo.Position,Mouse.Hit.p,15,3.5,Color3.new(0,0,1),25,0,1,0,true,55)
+	for i = 0,2 do
+		Effect({Time = 25,EffectType = "Round Slash",Size = Vector3.new(),Size2 = Vector3.new(.1,0,.1),Transparency = 0,Transparency2 = 1,CFrame = Holetwo.CFrame*CFrame.Angles(math.rad(math.random(0,360)),math.rad(math.random(0,360)),math.rad(math.random(0,360))),MoveToPos = nil,RotationX = math.random(-1,1),RotationY = math.random(-1,1),RotationZ = math.random(-1,1),Material = "Neon",Color = Color3.new(1,0,0),SoundID = nil,SoundPitch = nil,SoundVolume = nil,UseBoomerangMath = true,Boomerang = 0,SizeBoomerang = 15})
+		Effect({Time =25,EffectType = "Round Slash",Size = Vector3.new(),Size2 = Vector3.new(.1,0,.1),Transparency = 0,Transparency2 = 1,CFrame = Holetwo.CFrame*CFrame.Angles(math.rad(math.random(0,360)),math.rad(math.random(0,360)),math.rad(math.random(0,360))),MoveToPos = nil,RotationX = math.random(-1,1),RotationY = math.random(-1,1),RotationZ = math.random(-1,1),Material = "Neon",Color = shade,SoundID = nil,SoundPitch = nil,SoundVolume = nil,UseBoomerangMath = true,Boomerang = 0,SizeBoomerang = 15})
+	end
+	Effect({Time = 25,EffectType = "Box",Size = Vector3.new(),Size2 = Vector3.new(3,3,3),Transparency = 0,Transparency2 = 1,CFrame = Mouse.Hit,MoveToPos = nil,RotationX = math.random(-1,1),RotationY = math.random(-1,1),RotationZ = math.random(-1,1),Material = "Neon",Color = Color3.new(1,0,0),SoundID = 192410089,SoundPitch = .55,SoundVolume = 8,UseBoomerangMath = true,Boomerang = 0,SizeBoomerang = 50})
+	Effect({Time = 25,EffectType = "Box",Size = Vector3.new(),Size2 = Vector3.new(3,3,3),Transparency = 0,Transparency2 = 1,CFrame = Mouse.Hit,MoveToPos = nil,RotationX = math.random(-1,1),RotationY = math.random(-1,1),RotationZ = math.random(-1,1),Material = "Neon",Color = shade,SoundID = nil,SoundPitch = nil,SoundVolume = nil,UseBoomerangMath = true,Boomerang = 0,SizeBoomerang = 50})
+	for i = 0,2 do
+		Effect({Time = math.random(25,50),EffectType = "Round Slash",Size = Vector3.new(),Size2 = Vector3.new(.1,0,.1),Transparency = 0,Transparency2 = 1,CFrame = Mouse.Hit*CFrame.Angles(math.rad(math.random(0,360)),math.rad(math.random(0,360)),math.rad(math.random(0,360))),MoveToPos = nil,RotationX = math.random(-1,1),RotationY = math.random(-1,1),RotationZ = math.random(-1,1),Material = "Neon",Color = Color3.new(1,0,0),SoundID = nil,SoundPitch = nil,SoundVolume = nil,UseBoomerangMath = true,Boomerang = 0,SizeBoomerang = 15})
+		Effect({Time = math.random(25,50),EffectType = "Round Slash",Size = Vector3.new(),Size2 = Vector3.new(.1,0,.1),Transparency = 0,Transparency2 = 1,CFrame = Mouse.Hit*CFrame.Angles(math.rad(math.random(0,360)),math.rad(math.random(0,360)),math.rad(math.random(0,360))),MoveToPos = nil,RotationX = math.random(-1,1),RotationY = math.random(-1,1),RotationZ = math.random(-1,1),Material = "Neon",Color = shade,SoundID = nil,SoundPitch = nil,SoundVolume = nil,UseBoomerangMath = true,Boomerang = 0,SizeBoomerang = 15})
+	end
+	for i = 0,0.5,0.075 do
 		swait()
-		RootJoint.C0 = Clerp(RootJoint.C0,ROOTC0 * CFrame.new(0 + .5 * math.cos(sine/50),0,0 - .5 * math.sin(sine/50)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(30)),.7/3)
+		RootJoint.C0 = Clerp(RootJoint.C0,ROOTC0 * CFrame.new(0 + .5 * math.cos(sine/50),0,3 - .5 * math.sin(sine/50)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(30)),0.7/3)
 		Neck.C0 = Clerp(Neck.C0,nc0 * CFrame.new() * CFrame.Angles(math.rad(10),math.rad(0),math.rad(-60)),1/3)
-		RightShoulder.C0 = Clerp(RightShoulder.C0,CFrame.new(1.5,.5,0) * CFrame.Angles(math.rad(160),math.rad(-20),math.rad(60)) * rscp,1/3)
-		LeftShoulder.C0 = Clerp(LeftShoulder.C0,CFrame.new(-1.5,.5,0) * CFrame.Angles(math.rad(40),math.rad(5),math.rad(5)) * lscp,1/3)
-		RightHip.C0 = Clerp(RightHip.C0,CFrame.new(1,-.5,-.5) * CFrame.Angles(math.rad(-15 + 9 * math.cos(sine/74)),math.rad(80),math.rad(0)) * CFrame.Angles(math.rad(0 + 5 * math.cos(sine/37)),math.rad(0),math.rad(0)),.7/3)
-		LeftHip.C0 = Clerp(LeftHip.C0,CFrame.new(-1,-1,0) * CFrame.Angles(math.rad(-15 - 9 * math.cos(sine/54)),math.rad(-80),math.rad(0)) * CFrame.Angles(math.rad(0 - 5 * math.cos(sine/41)),math.rad(0),math.rad(0)),.7/3)
+		RightShoulder.C0 = Clerp(RightShoulder.C0,CFrame.new(1.5,0.5,0) * CFrame.Angles(math.rad(160),math.rad(-20),math.rad(60)) * rscp,1/3)
+		LeftShoulder.C0 = Clerp(LeftShoulder.C0,CFrame.new(-1.5,0.5,0) * CFrame.Angles(math.rad(40),math.rad(5),math.rad(5)) * lscp,1/3)
+		RightHip.C0 = Clerp(RightHip.C0,CFrame.new(1,-0.5,-0.5) * CFrame.Angles(math.rad(-15 + 9 * math.cos(sine/74)),math.rad(80),math.rad(0)) * CFrame.Angles(math.rad(0 + 5 * math.cos(sine/37)),math.rad(0),math.rad(0)),0.7/3)
+		LeftHip.C0 = Clerp(LeftHip.C0,CFrame.new(-1,-1,0) * CFrame.Angles(math.rad(-15 - 9 * math.cos(sine/54)),math.rad(-80),math.rad(0)) * CFrame.Angles(math.rad(0 - 5 * math.cos(sine/41)),math.rad(0),math.rad(0)),0.7/3)
 	end
 	walkspeed = 50
 	attack = false
@@ -635,13 +878,15 @@ Mouse.Button1Down:Connect(function()
 	if stopeverything then wait(math.huge) end
 	if not attack and (taunt.Value ~= "Fave" and taunt.Value ~= "Smog" and taunt.Value ~= "corrupt" and taunt.Value ~= "MaddoxLCv3" and taunt.Value ~= "uwuman" and taunt.Value ~= "snakeskid" and taunt.Value ~= "Regele" and taunt.Value ~= "Uncolored" and taunt.Value ~= "Memer" and taunt.Value ~= "Sit" and taunt.Value ~= "Krump" and taunt.Value ~= "OOOOO" and taunt.Value ~= "nulled" and taunt.Value ~= "uwu") then
 		attackone()
+wait(2)
+Effects:ClearAllChildren()
 	end
 end)
 Mouse.KeyDown:Connect(function(k)
 	if stopeverything then wait(math.huge) end
 	k = k:lower()
 	if k == "m" then
-		if songid.Value ~= "rbxassetid://3247404955" and songid.Value ~="rbxassetid://525565668" and songid.Value ~= "rbxassetid://9204489547" and songid.Value ~= "rbxassetid://9491494389" and songid.Value ~= "rbxassetid://9491642076" and songid.Value ~= "rbxassetid://9391448581" and songid.Value ~= "rbxassetid://1844218195" and songid.Value ~= "rbxassetid://278501300" and songid.Value ~= "rbxassetid://4921647660" and songid.Value ~= "rbxassetid://5015421167" and songid.Value ~= "rbxassetid://844654533" and songid.Value ~= "rbxassetid://6516420854" and songid.Value ~= "rbxassetid://1382488262" and songid.Value ~= "rbxassetid://170282324" and songid.Value ~= "rbxassetid://436219295" and songid.Value ~= "rbxassetid://436447939" and songid.Value ~= "rbxassetid://6338935488" and songid.Value ~= "rbxassetid://2728389795" and songid.Value ~= "rbxassetid://7576995029" and songid.Value ~= "rbxassetid://6941075541" and songid.Value ~= "rbxassetid://6049110238" and songid.Value ~= "rbxassetid://5805753966" and songid.Value ~= "rbxassetid://5310699007" and songid.Value ~= "rbxassetid://6323766331" and songid.Value ~= "rbxassetid://5368276808" and songid.Value ~= "rbxassetid://5177243035" and songid.Value ~= "rbxassetid://556122490" and songid.Value ~= "rbxassetid://6431602336" and songid.Value ~= "rbxassetid://5703266925" and songid.Value ~= "rbxassetid://5106599506" and songid.Value ~= "rbxassetid://6190635423" and songid.Value ~= "rbxassetid://4185475912" and songid.Value ~= "rbxassetid://5315171837" and songid ~= "rbxassetid://5089636816" and songid.Value ~= "rbxassetid://6768783121" and songid.Value ~= "rbxassetid://4835535512" and songid.Value ~= "rbxassetid://5089636816" and songid.Value ~= "rbxassetid://1280010741" and songid.Value ~= "rbxassetid://5355210927" and songid.Value ~="rbxassetid://2581112923" and songid.Value ~= "rbxassetid://481104377" and songid.Value ~= "rbxassetid://2920078671" and songid.Value ~= "rbxassetid://2297862957" and songid.Value ~= "rbxassetid://1338971957" and songid.Value ~= "rbxassetid://5460732000" and songid.Value ~= "rbxassetid://4557673096" and songid.Value ~= "rbxassetid://348832364" and songid.Value ~= "rbxassetid://1143392568" then
+		if songid.Value ~= "rbxassetid://3247404955" and songid.Value ~= "rbxassetid://69420" and songid.Value ~="rbxassetid://525565668" and songid.Value ~= "rbxassetid://9204489547" and songid.Value ~= "rbxassetid://9491494389" and songid.Value ~= "rbxassetid://9491642076" and songid.Value ~= "rbxassetid://9391448581" and songid.Value ~= "rbxassetid://1844218195" and songid.Value ~= "rbxassetid://278501300" and songid.Value ~= "rbxassetid://4921647660" and songid.Value ~= "rbxassetid://5015421167" and songid.Value ~= "rbxassetid://844654533" and songid.Value ~= "rbxassetid://6516420854" and songid.Value ~= "rbxassetid://1382488262" and songid.Value ~= "rbxassetid://170282324" and songid.Value ~= "rbxassetid://436219295" and songid.Value ~= "rbxassetid://436447939" and songid.Value ~= "rbxassetid://6338935488" and songid.Value ~= "rbxassetid://2728389795" and songid.Value ~= "rbxassetid://7576995029" and songid.Value ~= "rbxassetid://6941075541" and songid.Value ~= "rbxassetid://6049110238" and songid.Value ~= "rbxassetid://5805753966" and songid.Value ~= "rbxassetid://5310699007" and songid.Value ~= "rbxassetid://6323766331" and songid.Value ~= "rbxassetid://5368276808" and songid.Value ~= "rbxassetid://5177243035" and songid.Value ~= "rbxassetid://556122490" and songid.Value ~= "rbxassetid://6431602336" and songid.Value ~= "rbxassetid://5703266925" and songid.Value ~= "rbxassetid://5106599506" and songid.Value ~= "rbxassetid://6190635423" and songid.Value ~= "rbxassetid://4185475912" and songid.Value ~= "rbxassetid://5315171837" and songid ~= "rbxassetid://5089636816" and songid.Value ~= "rbxassetid://6768783121" and songid.Value ~= "rbxassetid://4835535512" and songid.Value ~= "rbxassetid://5089636816" and songid.Value ~= "rbxassetid://1280010741" and songid.Value ~= "rbxassetid://5355210927" and songid.Value ~="rbxassetid://2581112923" and songid.Value ~= "rbxassetid://481104377" and songid.Value ~= "rbxassetid://2920078671" and songid.Value ~= "rbxassetid://2297862957" and songid.Value ~= "rbxassetid://1338971957" and songid.Value ~= "rbxassetid://5460732000" and songid.Value ~= "rbxassetid://4557673096" and songid.Value ~= "rbxassetid://348832364" and songid.Value ~= "rbxassetid://1143392568" then
 			TauntRemote:FireServer("None",3247404955) 
 			sound:Play()
 			sound.SoundId = customasset("MEMELC/None.mp3")
@@ -666,6 +911,8 @@ Mouse.KeyDown:Connect(function(k)
 			sound:Play()
 			sound.SoundId = customasset("MEMELC/trus.mp3")
 		elseif songid.Value == "rbxassetid://7576995029" then
+TauntRemote:FireServer("uwuman2",69420)--fur
+elseif songid.Value == "rbxassetid://69420" then
 			TauntRemote:FireServer("snakeskid",6516420854)--usc (wtf)
 			sound:Stop()
 			sound:Play()
@@ -1139,7 +1386,7 @@ while not stopeverything do
 				Humanoid.HipHeight = 3
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "FurLC" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0 * CFrame.new(0,0,0),0.2/3)
@@ -1170,7 +1417,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "Chill" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
@@ -1196,7 +1443,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "Err0r" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0 * CFrame.new(0,0,0),0.2/3)
@@ -1223,7 +1470,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "upside_down" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0 * CFrame.new(0,0,0),0.2/3)
@@ -1282,7 +1529,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient	
+				att.Orientation = Vector3.new(0,0,0) --orient	
 			end
 		elseif taunt.Value == "CyberV2" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
@@ -1313,7 +1560,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "BloodWater" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
@@ -1344,7 +1591,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "Kicksher" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
@@ -1403,7 +1650,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient
+				att.Orientation = Vector3.new(0,0,0) --orient
 			end
 		elseif taunt.Value == "floating_man" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0 * CFrame.new(0,0,0),0.2/3)
@@ -1434,7 +1681,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient	
+				att.Orientation = Vector3.new(0,0,0) --orient	
 			end
 		elseif taunt.Value == "Alastor" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
@@ -1486,7 +1733,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "SolidLC" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0 * CFrame.new(0,0,0),0.2/3)
@@ -1514,7 +1761,7 @@ while not stopeverything do
 				elseif Torsovelocity >= sensitivity then
 					att.Parent = c["Right Arm"]
 					att.Position = Vector3.new(0, -1.5, -0.7)
-					att.Orientation = Vector3.new(-0, 90, -95)
+					att.Orientation =  Vector3.new(-0, 90, -45)
 					if NeckSnap then
 						Neck.C0 = Clerp(Neck.C0,NECKC0*CFrame.Angles(math.rad(20),math.rad(10*math.sin(sine/100)),0),1)
 						NeckSnap = false
@@ -1627,7 +1874,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient
+				att.Orientation = Vector3.new(0,0,0) --orient
 			end
 		elseif taunt.Value == "nebula" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0 * CFrame.new(0,0,0),0.2/3)
@@ -1778,7 +2025,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "corrupt" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
@@ -1809,7 +2056,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient
+				att.Orientation = Vector3.new(0,0,0) --orient
 			end
 		elseif taunt.Value == "sis" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0 * CFrame.new(0,0,0),0.2/3)
@@ -1836,7 +2083,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "V1" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
@@ -2124,7 +2371,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient
+				att.Orientation = Vector3.new(0,0,0) --orient
 			end
 		elseif taunt.Value == "friday" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0 * CFrame.new(0,0,0),0.2/3)
@@ -2153,7 +2400,7 @@ while not stopeverything do
 				end
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "ILord" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
@@ -2266,9 +2513,44 @@ while not stopeverything do
 				end
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient
+				att.Orientation = Vector3.new(0,0,0) --orient
+			end
+elseif taunt.Value == "uwuman2" then
+			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0 * CFrame.new(0,0,0),0.2/3)
+			Neck.C1 = Clerp(Neck.C1,CFrame.new(0,-0.5,0) * CFrame.Angles(math.rad(-90),math.rad(0),math.rad(180)),0.2/3)
+			RightHip.C1 = Clerp(RightHip.C1,CFrame.new(0.5,1,0,-4.37113918e-08,0,1,0,1,0,-1,0,-4.37113918e-08),1)
+			LeftHip.C1 = Clerp(LeftHip.C1,CFrame.new(-0.5,1,0,-4.37113918e-08,-0,-1,0,1,-0,1,0,-4.37113918e-08),1)
+			if attack == false then
+				if Torsovelocity < sensitivity/3.125 then
+					Anim = "Idle"
+					Humanoid.HipHeight=3
+					uwu +=1
+					jojowelds.welds.rot.C0 = functions.Clerp(jojowelds.welds.rot.C0,jojodefaults.roto*CFrame.new(0,.25*math.cos(uwu/16),.4*math.sin(uwu/16))*CFrame.Angles(math.rad(10-2.5*math.cos(uwu/16)),0,0),.1)
+					jojowelds.welds.net.C0 = functions.Clerp(jojowelds.welds.net.C0, jojodefaults.neco*CFrame.Angles(math.rad(16.5-1.5*math.cos(uwu/16)),math.rad(2.5-5.5*math.cos(uwu/16)),math.rad(-16.5*math.cos(uwu/15+.4*math.cos(uwu/20)))),.1)
+					jojowelds.welds.rt.C0 = functions.Clerp(jojowelds.welds.rt.C0,CFrame.new(1.45,.6+.05*math.sin(uwu/16),0)*CFrame.Angles(math.rad(5+5*math.cos(uwu/16)),math.rad(-5),math.rad(28+4*math.sin(uwu/16)))*jojodefaults.rico,.1)
+					jojowelds.welds.lt.C0 = functions.Clerp(jojowelds.welds.lt.C0,CFrame.new(-1.45,.6+.05*math.sin(uwu/16),0)*CFrame.Angles(math.rad(5+5*math.cos(uwu/16)),math.rad(5),math.rad(-28-4*math.sin(uwu/16)))*jojodefaults.leco,.1)
+					jojowelds.welds.rh.C0 = functions.Clerp(jojowelds.welds.rh.C0,CFrame.new(1,-.45+.1*math.sin(uwu/16),-.4)*CFrame.Angles(math.rad(-21.5+10*math.sin(uwu/16)),math.rad(65),math.rad(2.5)),.1)
+					jojowelds.welds.lh.C0 = functions.Clerp(jojowelds.welds.lh.C0,CFrame.new(-1,-.85+.1*math.sin(uwu/16),-.1)*CFrame.Angles(math.rad(-11.5+5*math.sin(uwu/16)),math.rad(-65),math.rad(-2.5)),.1)
+				elseif Torsovelocity >= sensitivity/3.125 then
+					Anim = "Walk"
+					Humanoid.HipHeight = 3
+					uwu +=1
+					local SidewaysMovement = ((RootPart.Velocity*RootPart.CFrame.RightVector).X+(RootPart.Velocity*RootPart.CFrame.RightVector).Z)/50
+					local ForwardMovement =  ((RootPart.Velocity*RootPart.CFrame.LookVector).X+(RootPart.Velocity*RootPart.CFrame.LookVector).Z)/50
+					jojowelds.welds.rot.C0 = functions.Clerp(jojowelds.welds.rot.C0,jojodefaults.roto*CFrame.new(0,0,.6*math.sin(uwu/16)*SidewaysMovement*ForwardMovement)*CFrame.new(SidewaysMovement+(1.5*SidewaysMovement)*math.sin(uwu/16),ForwardMovement-ForwardMovement*math.cos(uwu/16),-.185+.045*math.cos(uwu/56))*CFrame.Angles(math.rad((-15*ForwardMovement*math.sin(uwu/16))+(ForwardMovement*20)),math.rad(-SidewaysMovement*50),math.rad(math.cos(uwu/16))),.1)
+					jojowelds.welds.net.C0 = functions.Clerp(jojowelds.welds.net.C0, jojodefaults.neco*CFrame.Angles(math.rad((25+20*ForwardMovement*math.sin(uwu/16))+(-ForwardMovement)*18),math.rad(SidewaysMovement*5),math.rad(-SidewaysMovement*45-1)),.1)
+					jojowelds.welds.rt.C0 = functions.Clerp(jojowelds.welds.rt.C0,CFrame.new(1.45+.0*math.cos(uwu/16),.5,0)*CFrame.Angles(math.rad((10*ForwardMovement*math.cos(uwu/16))-ForwardMovement*25),math.rad(ForwardMovement*5),math.rad(18-(SidewaysMovement*28)+ForwardMovement*-10*math.sin(uwu/16)))*jojodefaults.rico,.1)
+					jojowelds.welds.lt.C0 = functions.Clerp(jojowelds.welds.lt.C0,CFrame.new(-1.45+.0*math.cos(uwu/16),.5,0)*CFrame.Angles(math.rad((10*ForwardMovement*math.cos(uwu/16))-ForwardMovement*25),math.rad(-ForwardMovement*5),math.rad(-18-(SidewaysMovement*28)+ForwardMovement*10*math.sin(uwu/16)))*jojodefaults.leco,.1)
+					jojowelds.welds.rh.C0 = functions.Clerp(jojowelds.welds.rh.C0,CFrame.new(1,-.8,-.15)*CFrame.Angles(math.rad(-20-(20*math.cos(uwu/16))*ForwardMovement),math.rad(85),math.rad((5*ForwardMovement)-SidewaysMovement*15)),.1)
+					jojowelds.welds.lh.C0 = functions.Clerp(jojowelds.welds.lh.C0,CFrame.new(-1,-.6,-.3)*CFrame.Angles(math.rad(-20-(20*math.cos(uwu/16))*ForwardMovement),math.rad(-85),math.rad((-5*ForwardMovement)-SidewaysMovement*15)),.1)
+				end
+walkspeed = 150
+				att.Parent = c["Torso"] --what ur welding on
+				att.Position = Vector3.new(0,0,0.7) --pos
+				att.Orientation = Vector3.new(0,0,0) --orient
 			end
 		elseif taunt.Value == "MaddoxLCv3" then
+walkspeed = 50
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
 			Neck.C1 = Clerp(Neck.C1,CFrame.new(0,-.5,0) * CFrame.Angles(math.rad(-90),math.rad(0),math.rad(180)),.2/3)
 			RightHip.C1 = Clerp(RightHip.C1,CFrame.new(.5,1,0,-4.37113918e-08,0,1,0,1,0,-1,0,-4.37113918e-08),1)
@@ -2280,7 +2562,7 @@ while not stopeverything do
 					Anim = "Idle"
 					att.Parent = c["Torso"] --what ur welding on
 					att.Position = Vector3.new(0,0,0.7) --pos
-					att.Orientation = Vector3.new(0,0,-45) --orient
+					att.Orientation = Vector3.new(0,0,0) --orient
 					RootJoint.C0 = Qlerp(RootJoint.C0, ROOTC0 * CFrame.new(0, -.08 * math.sin(T / 60), -.1 + .1 * math.cos(T / 60)) * CFrame.Angles(math.rad(5 * math.sin(T / 60)), 0, math.rad(-5)), .25)
 					Neck.C0 = Qlerp(Neck.C0, NECKC0 * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(4 + 2 * math.sin(T / 60)), 0, math.rad(5)), .25)
 					RightShoulder.C0 = Qlerp(RightShoulder.C0, CFrame.new(1.5, 0.5 + .1 * math.cos(T / 60), 0) * CFrame.Angles(math.rad(-2 * math.cos(T / 60)), 0, math.rad(5 * math.cos(T / 60))) * RIGHTSHOULDERC0, .25)
@@ -2291,7 +2573,7 @@ while not stopeverything do
 					Anim = "Walk"
 					att.Parent = c["Torso"] --what ur welding on
 					att.Position = Vector3.new(0,0,0.7) --pos
-					att.Orientation = Vector3.new(0,0,-45) --orient
+					att.Orientation = Vector3.new(0,0,0) --orient
 					RootJoint.C0 = Qlerp(RootJoint.C0, ROOTC0 * CFrame.new(0, 0, .055 * math.sin(T / 5)) * CFrame.Angles(math.rad(15), 0, math.rad(5 * math.sin(T / 10))), .25)
 					Neck.C0 = Qlerp(Neck.C0, NECKC0 * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-5), 0, math.rad(-5 * math.sin(T / 10))), .25)
 					RightShoulder.C0 = Qlerp(RightShoulder.C0, CFrame.new(1.5, 0.5, 0) * CFrame.Angles(math.rad(25 * math.sin(T / 10)), 0, math.rad(5)) * RIGHTSHOULDERC0, .25)
@@ -2328,7 +2610,7 @@ while not stopeverything do
 				Humanoid.HipHeight = 2
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "MaddoxLCv3_9" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
@@ -2358,7 +2640,7 @@ while not stopeverything do
 				Humanoid.HipHeight = 2
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "MaddoxLCv3_10" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
@@ -2388,7 +2670,7 @@ while not stopeverything do
 				Humanoid.HipHeight = 2
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient	
+				att.Orientation = Vector3.new(0,0,0) --orient	
 			end
 		elseif taunt.Value == "MaddoxLCv3_11" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
@@ -2418,7 +2700,7 @@ while not stopeverything do
 				Humanoid.HipHeight = 2
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient	
+				att.Orientation = Vector3.new(0,0,0) --orient	
 			end
 		elseif taunt.Value == "MaddoxLCv3_13" then
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
@@ -2448,12 +2730,13 @@ while not stopeverything do
 				Humanoid.HipHeight = 2
 				att.Parent = c["Right Arm"]
 				att.Position = Vector3.new(0, -1.5, -0.7)
-				att.Orientation = Vector3.new(-0, 90, -95)
+				att.Orientation =  Vector3.new(-0, 90, -45)
 			end
 		elseif taunt.Value == "snakeskid" then
+		walkspeed = 50
 			att.Parent = c["Torso"] --what ur welding on
 			att.Position = Vector3.new(0,0,0.7) --pos
-			att.Orientation = Vector3.new(0,0,-45) --orient	
+			att.Orientation = Vector3.new(0,0,0) --orient	
 			RootJoint.C1 = Clerp(RootJoint.C1,ROOTC0,.2/3)
 			Neck.C1 = Clerp(Neck.C1,CFrame.new(0,-.5,0) * CFrame.Angles(math.rad(-90),math.rad(0),math.rad(180)),.2/3)
 			RightHip.C1 = Clerp(RightHip.C1,CFrame.new(.5,1,0,-4.37113918e-08,0,1,0,1,0,-1,0,-4.37113918e-08),1)
@@ -2489,7 +2772,7 @@ while not stopeverything do
 			if taunt.Value == "Fave" then
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient
+				att.Orientation = Vector3.new(0,0,0) --orient
 				RootJoint.C0 = Clerp(RootJoint.C0,rc0 * CFrame.new(0,0,0),1)
 				Neck.C0 = Clerp(Neck.C0,nc0 * CFrame.new(),1)
 				RightShoulder.C0 = Clerp(RightShoulder.C0,CFrame.new(1.5,0.5,0) * rscp,1)
@@ -2502,7 +2785,7 @@ while not stopeverything do
 			if taunt.Value == "Krump" then
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient
+				att.Orientation = Vector3.new(0,0,0) --orient
 				RootJoint.C0 = Clerp(RootJoint.C0,rc0 * CFrame.new(0+1*math.sin(sine/3),0+1*math.cos(sine/3),-.75) * CFrame.Angles(math.rad(0),math.rad(-10),math.rad(0)),1)
 				Neck.C0 = Clerp(Neck.C0,nc0 * CFrame.new(),1)
 				RightShoulder.C0 = Clerp(RightShoulder.C0,CFrame.new(1.5,1,0) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(90)) * rscp,1)
@@ -2514,7 +2797,7 @@ while not stopeverything do
 			elseif taunt.Value == "Memer" then
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient
+				att.Orientation = Vector3.new(0,0,0) --orient
 				RootJoint.C0 = Clerp(RootJoint.C0,rc0 * CFrame.new(0 , 0 , 0) * CFrame.Angles(math.rad(math.random(-9000,9000)), math.rad(math.random(-9000,9000)), math.rad(math.random(-9000,9000))),1)
 				Neck.C0 = Clerp(Neck.C0,nc0 * CFrame.new() * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0)),1)
 				RightShoulder.C0 = Clerp(RightShoulder.C0, CFrame.new(1.5, 0.5, 0) * CFrame.Angles(math.rad(90), math.rad(0), math.rad(90)) * rscp,1)
@@ -2526,7 +2809,7 @@ while not stopeverything do
 			elseif taunt.Value == "Smog" then
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient
+				att.Orientation = Vector3.new(0,0,0) --orient
 				LeftShoulder.C0 = Clerp(LeftShoulder.C0, CFrame.new(-1, 0.5, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0) * CFrame.new(-0.699999988079071 + -0.25 * math.cos(T / 12.5), 0.5 + 0.20000000298023224 * math.cos(T / 6.25), 0 + 0 * math.cos(T / 12.5)) * CFrame.Angles(math.rad(-25 + -90 * math.cos(T / 12.5)), math.rad(0 + -25 * math.cos(T / 12.5)), math.rad(-145 + -35 * math.cos(T / 12.5))), 0.2)
 				RootJoint.C0 = Clerp(RootJoint.C0, CFrame.new(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0) * CFrame.new(0 + 0 * math.cos(T / 12.5), 0 + 0 * math.cos(T / 12.5), -0.5 + -0.5 * math.cos(T / 6.25)) * CFrame.Angles(math.rad(0 + 0 * math.cos(T / 12.5)), math.rad(0 + -9 * math.cos(T / 12.5)), math.rad(0 + 0 * math.cos(T / 12.5))), 0.2)
 				LeftHip.C0 = Clerp(LeftHip.C0, CFrame.new(-1, -1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0) * CFrame.new(-0.5 + 0 * math.cos(T / 12.5), 0.5 + 0.5 * math.cos(T / 6.25), 0 + 0 * math.cos(T / 12.5)) * CFrame.Angles(math.rad(-9 + 15 * math.cos(T / 12.5)), math.rad(15 + 0 * math.cos(T / 6.25)), math.rad(9 + 0 * math.cos(T / 12.5))), 0.2)
@@ -2536,7 +2819,7 @@ while not stopeverything do
 			elseif taunt.Value == "Sit" then
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient
+				att.Orientation = Vector3.new(0,0,0) --orient
 				RootJoint.C0 = Clerp(RootJoint.C0,ROOTC0 * CFrame.new(0, 0, -1.70) * CFrame.Angles(math.rad(-40), math.rad(0), math.rad(0)),0.5)
 				Neck.C0 = Clerp(Neck.C0, NECKC0 * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0)),0.5)
 				RightShoulder.C0 = Clerp(RightShoulder.C0, CFrame.new(1.5, 0.3, 0.10) * CFrame.Angles(math.rad(-40), math.rad(0), math.rad(0)) * RIGHTSHOULDERC0,0.5)
@@ -2546,7 +2829,7 @@ while not stopeverything do
 			elseif taunt.Value == "nulled" then	
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient		
+				att.Orientation = Vector3.new(0,0,0) --orient		
 				change = 1
 				LOOPx = LOOPx + 5
 				RootJoint.C0 = Clerp(RootJoint.C0,ROOTC0 * CF(-0.25 * COS(LOOPx / 50), 0, -0.5 - 0.5 * COS(LOOPx / 25)) * ANGLES(RAD(0), RAD(0), RAD(45 * SIN(LOOPx / 50))) * ANGLES(RAD(45 + 22.5 * COS(LOOPx / 25)), RAD(0), RAD(0)), 2 / Animation_Speed)
@@ -2558,7 +2841,7 @@ while not stopeverything do
 			elseif taunt.Value == "OOOOO" then
 				att.Parent = c["Torso"] --what ur welding on
 				att.Position = Vector3.new(0,0,0.7) --pos
-				att.Orientation = Vector3.new(0,0,-45) --orient
+				att.Orientation = Vector3.new(0,0,0) --orient
 				RootJoint.C0 = Clerp(RootJoint.C0,rc0*CFrame.new(math.random(-1,1)/2,math.random(-1,1)/2,math.random(-1,1)/2)*CFrame.Angles(math.rad(math.random(-45,45)),math.rad(math.random(-45,45)),0),1)
 				Neck.C0 = Clerp(Neck.C0,nc0,1)
 				RightShoulder.C0 = Clerp(RightShoulder.C0,CFrame.new(2,0,0) * rscp * CFrame.Angles(math.rad(-90),0,0),1)
