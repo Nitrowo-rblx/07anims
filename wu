@@ -95,16 +95,29 @@ Hat.Rename("rbxassetid://13421774668", "Tor")
 
 local gay = false
 workspace.FallenPartsDestroyHeight = 0/0
-    local ch = game.Players.LocalPlayer.Character
-       for _,v in pairs(ch:GetChildren()) do
-       if v:IsA("Accessory") then
-       if string.find(v.Name,"RobotArm") then
-       v.Name = "PurpleRobotArm"
-end
-end
-end
---game:GetService("Workspace")["Error_30363"].EyesOfTheEverWorld.Name = "Puffer Vest"
 
+--game:GetService("Workspace")["Error_30363"].EyesOfTheEverWorld.Name = "Puffer Vest"
+if gay == true then
+     game.Players:Chat("-gh 5316479641,5268602207,5316549755,5316539421,5268555719,5268720002,5268710380")
+     
+     wait(1)
+      
+     spawn(function()
+if game.Players.LocalPlayer.Character.CorruptLordSword then
+    if  game.Players.LocalPlayer.Character:FindFirstChild("ToxicLordSword") then
+    game.Players.LocalPlayer.Character.ToxicLordSword.Name =  "greensword"
+        game.Players.LocalPlayer.Character.RainbowGodSword.Name = "nils"
+game.Players.LocalPlayer.Character.CorruptLordSword.Name = "RainbowGodSword"
+game.Players.LocalPlayer.Character.nils.Name = "ToxicLordSword"
+    else
+   
+    game.Players.LocalPlayer.Character.RainbowGodSword.Name = "nils"
+game.Players.LocalPlayer.Character.CorruptLordSword.Name = "RainbowGodSword"
+game.Players.LocalPlayer.Character.nils.Name = "ToxicLordSword"
+end
+end
+end)
+end
 _G.HeadMovement = false -- respawns your character and you will also have no animations unless you run a script
 _G.HeadMovementv4 = false -- v2 was this but shit (semi-bot)
 _G.HeadMovementv3 = true -- just aligns hats (iron bulb head)
@@ -744,17 +757,17 @@ pcall(function()
 c["PurpleRobotArm"].Handle.CFrame = char["Left Arm"].CFrame  * CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
  end)
  pcall(function()
- c["Rarm"].Handle.CFrame = char["Right Arm"].CFrame* CFrame.Angles(math.rad(90),math.rad(-90),math.rad(0))* CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
+ c["BlueRobotArm"].Handle.CFrame = char["Right Arm"].CFrame* CFrame.Angles(math.rad(0),math.rad(180),math.rad(0))* CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
     end)
     pcall(function()
-   c["SkeletonLeftLeg"].Handle.CFrame = char["Left Leg"].CFrame * CFrame.Angles(math.rad(0),math.rad(0),math.rad(-5))  *CFrame.Angles(0,0,-.001*math.sin(100*tick()))
+   c["RobotArmTest"].Handle.CFrame = char["Left Leg"].CFrame * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0))  *CFrame.Angles(0,0,-.001*math.sin(100*tick()))
 end)
   pcall(function()
-c["Rleg"].Handle.CFrame = char["Right Leg"].CFrame* CFrame.Angles(math.rad(90),math.rad(-90),math.rad(0))  *CFrame.Angles(0,0,-.001*math.sin(100*tick()))
+c["Rarm"].Handle.CFrame = char["Right Leg"].CFrame* CFrame.Angles(math.rad(90),math.rad(-90),math.rad(0))  *CFrame.Angles(0,0,-.001*math.sin(100*tick()))
 end)
 pcall(function()
           for _,v in pairs(c:GetChildren()) do
-       if v:IsA("Accessory") and v.Name ~= "PurpleRobotArm" and v.Name ~= "Larm"  and v.Name ~= "Rarm"  and v.Name ~= "funnihead"and v.Name ~= "Rleg"  and v.Name ~= "Tor" and v.Name ~= "Lleg" and v.Name ~= "SkeletonLeftLeg" and v.Name ~= "RectangleHead-2"  then
+       if v:IsA("Accessory") and v.Name ~= "PurpleRobotArm" and v.Name ~= "BlueRobotArm"  and v.Name ~= "Rarm"  and v.Name ~= "RobotArmTest" and v.Name ~= "Rleg"  and v.Name ~= "Tor" and v.Name ~= "Lleg" and v.Name ~= "SkeletonLeftLeg" and v.Name ~= "RectangleHead-2"  then
 v.Handle.CFrame = char[v.Name].Handle.CFrame * CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
   end     
 end
@@ -822,6 +835,10 @@ end)
 
 		workspace.FallenPartsDestroyHeight = -500
 		settings().Physics.AllowSleep = false
+
+
+
+
 
 
 
