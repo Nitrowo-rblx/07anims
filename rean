@@ -1,4 +1,4 @@
- _G.ExtraStabilty = true
+_G.ExtraStabilty = true
 local Hat = {
 Rename = function(HatID, NAME)
 for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
@@ -17,43 +17,15 @@ for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
         end
     end
 end}
-Hat.Rename("rbxassetid://13415096670", "Rarm")
+Hat.Rename("rbxassetid://11263221350", "Rleg")
 Hat.Rename("rbxassetid://13421705040", "Larm")
-Hat.Rename("rbxassetid://13421836805", "Rleg")
+Hat.Rename("rbxassetid://11159370334", "Rarm")
 Hat.Rename("rbxassetid://13421798868", "Lleg")
 Hat.Rename("rbxassetid://13421774668", "Tor")
-_G.HeadMovement = false -- respawns your character and you will also have no animations unless you run a script
-_G.HeadMovementv4 = false -- v2 was this but shit (semi-bot)
-_G.HeadMovementv3 = true -- just aligns hats (iron bulb head)
-_G.fakeHeadMovementv2 = false -- uses permadeath and the same hats as headmovementv2 to look cool or some shit (need fling hat)
-_G.HatLimbs = true  -- swaps your limbs with hats
-_G.Fling = false -- RectangleHead needed
-_G.PermaDeath = true
-_G.ShowNetwork = false -- enable for debugging
-_G.BlockHead = false  
-_G.ReanimatedAnimations = true
-_G.CFalign = false -- CFalign = better looking but less features , Original method (false) = worse looking  but more features
-_G.BlockArm = false -- hides head with wackyhead
-_G.YellowHatTorso = false -- smaller but looks ok
-_G.Netless = true
-_G.rcdbypass = true
-_G.StabilityIncrease = true -- slight jitter motion but wont crumble
-_G.DelHead = false -- deletes head
-_G.HatBody = false -- gives hat torso aswel
---fucking self explanatory 
-_G.AntiFling = true
-_G.EnableNetLib = false
-_G.wackyhead = false -- changes non pd alot
-_G.BodyForceEnabled = false
-_G.FasterLoad = true -- loads perma instantly (kinda) but is really buggy
-_G.HealthHide = false -- patched
-_G.Blockwackyhead = false -- sometimes face dissapears
-_G.R15toR6 = false -- no settings work
+
 local gay = false
-if game.Players.LocalPlayer.Name ~= "Error_30363" then
-        game.Players:Chat("-gh 12867902427,12867844310,12867883922,12867908993,12867841874,12867898930,12876447014,1048213")
-        wait(1)
-        end
+workspace.FallenPartsDestroyHeight = 0/0
+
 --game:GetService("Workspace")["Error_30363"].EyesOfTheEverWorld.Name = "Puffer Vest"
 if gay == true then
      game.Players:Chat("-gh 5316479641,5268602207,5316549755,5316539421,5268555719,5268720002,5268710380")
@@ -76,7 +48,32 @@ end
 end
 end)
 end
-
+_G.HeadMovement = false -- respawns your character and you will also have no animations unless you run a script
+_G.HeadMovementv4 = false -- v2 was this but shit (semi-bot)
+_G.HeadMovementv3 = true -- just aligns hats (iron bulb head)
+_G.fakeHeadMovementv2 = false -- uses permadeath and the same hats as headmovementv2 to look cool or some shit (need fling hat)
+_G.HatLimbs = true  -- swaps your limbs with hats
+_G.Fling = false -- RectangleHead needed
+_G.PermaDeath = true
+_G.ShowNetwork = false -- enable for debugging
+_G.BlockHead = false  
+_G.ReanimatedAnimations = false
+_G.CFalign = false -- CFalign = better looking but less features , Original method (false) = worse looking  but more features
+_G.BlockArm = false -- hides head with wackyhead
+_G.YellowHatTorso = false -- smaller but looks ok
+_G.Netless = true
+_G.rcdbypass = true
+_G.StabilityIncrease = true -- slight jitter motion but wont crumble
+_G.DelHead = false -- deletes head
+_G.HatBody = false -- gives hat torso aswel 
+_G.AntiFling = true
+_G.EnableNetLib = false
+_G.wackyhead = false -- changes non pd alot
+_G.BodyForceEnabled = true
+_G.FasterLoad = true -- loads perma instantly (kinda) but is really buggy
+_G.HealthHide = false -- patched
+_G.Blockwackyhead = false -- sometimes face dissapears
+_G.R15toR6 = false -- no settings work
 local z  = "r15"
 if _G.ShowNetwork == true then
     settings().Physics.AreOwnersShown = true
@@ -307,61 +304,21 @@ for i,v in pairs(c:GetChildren()) do
 	end
 end
 end)
-if false then
-local uis = game:GetService("UserInputService")
-uis.InputBegan:Connect(function(key) 
-if key.KeyCode ==  Enum.KeyCode.Z then
-if _G.AltFling == true then
-game.Players:Chat("fling")
-end
-if _G.HatCollide == true then
-swordbigvel = true
-wait(2)
-swordbigvel = false
-else
-wait()
-end
-end
-end)
-end
+
 
 velocity = game:GetService("RunService").Heartbeat:Connect(function(set)
-if swordbigvel == true then
-for i,v in pairs(c:GetChildren()) do
-	if v:IsA("Accessory") and v.Name ~= "MeshPartAccessory" then
---	    v.Handle.CFrame = reanim[v.Name].Handle.CFrame
-		v.Handle.AssemblyLinearVelocity = Vector3.new(char.Torso.AssemblyLinearVelocity.X*15, -32.5, char.Torso.AssemblyLinearVelocity*15)
-	end
-end
-for i,v in pairs(c:GetChildren()) do
-	if v:IsA("Accessory") and v.Name == "MeshPartAccessory" then
---	    v.Handle.CFrame = reanim[v.Name].Handle.CFrame
-		v.Handle.AssemblyLinearVelocity = Vector3.new(char.Torso.AssemblyLinearVelocity.X*100000, 10000, char.Torso.AssemblyLinearVelocity*100000)
-	end
-end
-elseif swordbigvel == false then
 for i,v in pairs(c:GetChildren()) do
 	if v:IsA("Accessory")  then
---	    v.Handle.CFrame = reanim[v.Name].Handle.CFrame
-        math.randomseed(char.Torso.AssemblyLinearVelocity.X*25)
 		v.Handle.AssemblyLinearVelocity = Vector3.new(char.Torso.AssemblyLinearVelocity.X*25, 26.65*-1, char.Torso.AssemblyLinearVelocity*25)
 	end
 end
-end
 end)
-
 
 local function force(part,force)
 	local bodyforce = Instance.new("BodyForce", part)
 	bodyforce.Force = force
 end
 if _G.BodyForceEnabled == true then
-for i,v in pairs(c:GetChildren()) do
-	if v:IsA("BasePart") then
-	force(v,Vector3.new(80,80,80))
-	end
-end
-
 for i,v in pairs(c:GetChildren()) do
 	if v:IsA("Accessory") then
 		force(v.Handle,Vector3.new(80,80,80))
@@ -388,7 +345,7 @@ for _, child in pairs(c:GetChildren()) do
 
 
  for _,v in pairs(c:GetChildren()) do
-       if v:IsA("Accessory")  and v.Name ~= "Rleg" and v.Name ~= "Lleg"  and v.Name ~= "Rarm" and v.Name ~= "funnihead"  and v.Name ~= "Larm" and v.Name ~= "RectangleFace" and v.Name ~= "Tor" and v.Name ~= "RectangleHead-2"    then
+   if v:IsA("Accessory")  and v.Name ~= "Rleg" and v.Name ~= "SkeletonLeftLeg"  and v.Name ~= "Rarm" and v.Name ~= "funnihead"  and v.Name ~= "PurpleRobotArm" and v.Name ~= "RectangleFace" and v.Name ~= "Tor" and v.Name ~= "RectangleHead-2"    then
       local a = v:Clone()
       if c.Humanoid.RigType == Enum.HumanoidRigType.R6 then
       a.Handle.AccessoryWeld.Part1 = char[a.Handle.AccessoryWeld.Part1.Name]
@@ -407,10 +364,16 @@ for _, child in pairs(c:GetChildren()) do
     msh.Parent = han
     weld.Part0 = han
     weld.Parent = han
+
           if    a.Handle.AccessoryWeld.Part1 == c.Head then
                  a.Handle.AccessoryWeld.Part1 = char[a.Handle.AccessoryWeld.Part1.Name]
-                 else
+                 elseif a.Handle.AccessoryWeld.Part1 == c.UpperTorso then
                         a.Handle.AccessoryWeld.Part1 = char["Torso"]
+                        elseif a.Handle.AccessoryWeld.Part1 == c.LowerTorso then
+                       q =  v.Handle.AccessoryWeld:Clone()
+                       q.Parent = game.Players.LocalPlayer
+                       q.Enabled = true
+                          a.Handle.AccessoryWeld.Part1 = char["Torso"]
           end
       end
                               Accessory = v
@@ -499,7 +462,7 @@ if _G.wackyhead == true then
 
 
   wait(game.Players.RespawnTime + 0.25)  
-	rootPart.CFrame = CFrame.new(rootPart.CFrame.X,-250,rootPart.CFrame.Z) + Vector3.new(0, hipHeight or 4, 0)
+rootPart.CFrame = CFrame.new(rootPart.CFrame.X,-300,rootPart.CFrame.Z) + Vector3.new(0, hipHeight or 4, 0)
 
 
 
@@ -715,30 +678,27 @@ if _G.EnableNetLib == true then
 
 
 
-
  local connect = game:GetService("RunService").Heartbeat:Connect(function(set)
-pcall(function()
-        c["funnihead"].Handle.CFrame = char["Head"].CFrame * CFrame.new(-0,0,0) *CFrame.Angles(0,0, math.rad(180)) * CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
- end)
+
  pcall(function()
  c["Tor"].Handle.CFrame = char["Torso"].CFrame *CFrame.new(0,0,0)  * CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
 end)
 pcall(function()
-c["Larm"].Handle.CFrame = char["Left Arm"].CFrame* CFrame.Angles(math.rad(62.5),math.rad(20.5),math.rad(6))  * CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
+c["PurpleRobotArm"].Handle.CFrame = char["Left Arm"].CFrame  * CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
  end)
  pcall(function()
- c["Rarm"].Handle.CFrame = char["Right Arm"].CFrame* CFrame.Angles(math.rad(66),math.rad(-25),math.rad(3))* CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
+ c["BlueRobotArm"].Handle.CFrame = char["Right Arm"].CFrame* CFrame.Angles(math.rad(0),math.rad(180),math.rad(0))* CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
     end)
     pcall(function()
-   c["Lleg"].Handle.CFrame = char["Left Leg"].CFrame* CFrame.Angles(math.rad(-84.95),math.rad(31.5),math.rad(42))  *CFrame.Angles(0,0,-.001*math.sin(100*tick()))
+   c["RobotArmTest"].Handle.CFrame = char["Left Leg"].CFrame * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0))  *CFrame.Angles(0,0,-.001*math.sin(100*tick()))
 end)
   pcall(function()
-c["Rleg"].Handle.CFrame = char["Right Leg"].CFrame* CFrame.Angles(math.rad(84),math.rad(-31.5),math.rad(-64))  *CFrame.Angles(0,0,-.001*math.sin(100*tick()))
+c["Rarm"].Handle.CFrame = char["Right Leg"].CFrame* CFrame.Angles(math.rad(90),math.rad(-90),math.rad(0))  *CFrame.Angles(0,0,-.001*math.sin(100*tick()))
 end)
 pcall(function()
           for _,v in pairs(c:GetChildren()) do
-       if v:IsA("Accessory") and v.Name ~= "RectangleHead" and v.Name ~= "Larm"  and v.Name ~= "Rarm"  and v.Name ~= "funnihead"and v.Name ~= "Rleg"  and v.Name ~= "Tor" and v.Name ~= "Lleg" and v.Name ~= "RectangleFace-2" and v.Name ~= "RectangleHead-2"  then
-if c.Humanoid.RigType == Enum.HumanoidRigType.R6 then
+       if v:IsA("Accessory") and v.Name ~= "PurpleRobotArm" and v.Name ~= "BlueRobotArm"  and v.Name ~= "Rarm"  and v.Name ~= "RobotArmTest" and v.Name ~= "Rleg"  and v.Name ~= "Tor" and v.Name ~= "Lleg" and v.Name ~= "SkeletonLeftLeg" and v.Name ~= "RectangleHead-2"  then
+      if c.Humanoid.RigType == Enum.HumanoidRigType.R6 then
 v.Handle.CFrame = char[v.Name].Handle.CFrame * CFrame.Angles(0,0,-.0005*math.sin(100*tick()))
 else
 if  char[v.Name].Handle:FindFirstChildOfClass("Weld") then
@@ -753,7 +713,8 @@ end
 end
   end     
 end
-   end)
+end)
+
     
        
   for _,v in pairs(c:GetChildren()) do
@@ -777,31 +738,8 @@ sethiddenproperty(v,"NetworkIsSleeping", false)
 end
 end
 	settings().Physics.AllowSleep = false
-if _G.ExtraStabilty == true then
-pcall(function()
-for _,v in pairs(c:GetDescendants()) do
-if v:IsA("Accessory") then
-	if game:GetService("RunService").Heartbeat:Wait() > 0.2 then
-v.Handle.Anchored = true
-wait()
-v.Handle.Anchored = false
-wait()
-v.Handle.Anchored = true
-wait()
-v.Handle.Anchored = false
-wait()
-v.Handle.Anchored = true
-wait()
-v.Handle.Anchored = false
-wait()
-else
-v.Handle.Anchored = false
-    end
-	end
-	end
-	end)
-	end
 end)
+
 
 
 char:FindFirstChildOfClass("Humanoid").Died:Connect(function()
@@ -837,12 +775,12 @@ velocity:Disconnect()
 end)
 
 
-		workspace.FallenPartsDestroyHeight = -1000
+		workspace.FallenPartsDestroyHeight = -500
 		settings().Physics.AllowSleep = false
-local c = game:GetService("Players").LocalPlayer.Character
 
 
 
 
 
- 
+ wait(7.5)
+ workspace.FallenPartsDestroyHeight = -1000
